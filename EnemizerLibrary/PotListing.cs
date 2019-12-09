@@ -150,10 +150,10 @@ namespace EnemizerLibrary
         //Game Room 74 - PoD entrance
         new GameRoom(74, new EmptyPot[] 
             {
-                //new EmptyPot(0x0E, 0x05), // switch
+                new EmptyPot(0x0E, 0x05, 2), // switch
                 new EmptyPot(0x20, 0x05),
                 new EmptyPot(0x5C, 0x05),
-                //new EmptyPot(0x6E, 0x05), // switch
+                new EmptyPot(0x6E, 0x05, 2), // switch
 
                 new EmptyPot(0x38, 0x08),
                 new EmptyPot(0x44, 0x08),
@@ -165,7 +165,7 @@ namespace EnemizerLibrary
             },
             new byte[]
             {
-                0x0B, 0x0B, 0x0A, 0x0A, 0x0A, 0x0A, 0x01, 0x01//, 0x88, 0x88
+                0x0B, 0x0B, 0x0A, 0x0A, 0x0A, 0x0A, 0x01, 0x01, 0x88, 0x88
             }
         ),
         //Game Room 78
@@ -401,8 +401,8 @@ namespace EnemizerLibrary
             foreach (GameRoom g in roomList)
             {
                 //scan all items and pots to see if there is a key or switch and pots reserved
-                bool reservedkey = false;
-                bool reservedswitch = false;
+                int reservedkeys = 0;
+                int reservedswitches = 0;
                 List<byte> roomItems = new List<byte>();
                 List<EmptyPot> roomEmptyPots = new List<EmptyPot>();
                 List<FilledPot> roomPots = new List<FilledPot>();
@@ -427,11 +427,11 @@ namespace EnemizerLibrary
                     }
                     if (g.pots[i].reserved == 1)
                     {
-                        reservedkey = true;
+                        reservedkeys++;
                     }
                     if (g.pots[i].reserved == 2)
                     {
-                        reservedswitch = true;
+                        reservedswitches++;
                     }
 
 
@@ -442,32 +442,24 @@ namespace EnemizerLibrary
                     //Debug.WriteLine("(Room201)NBR ITEMS ORIG: " + g.items.Length + " / copied items :" + roomItems.Count + "Original pots :" + g.pots.Length + " / copied pots : " + roomEmptyPots.Count);
                 }
 
-                while (reservedkey || reservedswitch) // loop until we find a spot for a key and switch if they have reserved spot
+                while (reservedkeys > 0 || reservedswitches > 0) // loop until we find a spot for a key and switch if they have reserved spot
                 {
+                    int pid = r.Next(0, roomEmptyPots.Count);
 
-                    if (reservedkey)//try to place a key in a reserved pot
+                    if (reservedkeys > 0 && roomEmptyPots[pid].reserved == 1) //try to place a key in a reserved pot
                     {
-                        int pid = r.Next(0, roomEmptyPots.Count);
-                        if (g.pots[pid].reserved == 1)
-                        {
-                            roomItems.Remove(0x08);
-                            roomPots.Add(new FilledPot(g.pots[pid].x, g.pots[pid].y, 0x08));
-                            roomEmptyPots.Remove(g.pots[pid]);
-                            reservedkey = false;
-                        }
+                        roomItems.Remove(0x08);
+                        roomPots.Add(new FilledPot(roomEmptyPots[pid].x, roomEmptyPots[pid].y, 0x08));
+                        roomEmptyPots.RemoveAt(pid);
+                        reservedkeys = roomItems.Contains(0x08) ? reservedkeys - 1 : 0;
                     }
 
-                    if (reservedswitch)//try to place a switch in a reserved pot
+                    if (reservedswitches > 0 && roomEmptyPots[pid].reserved == 2) //try to place a switch in a reserved pot
                     {
-                        int pid = r.Next(0, roomEmptyPots.Count);
-                        if (g.pots[pid].reserved == 2)
-                        {
-                            roomItems.Remove(0x88);
-                            roomPots.Add(new FilledPot(g.pots[pid].x, g.pots[pid].y, 0x88));
-                            roomEmptyPots.Remove(g.pots[pid]);
-
-                            reservedswitch = false;
-                        }
+                        roomItems.Remove(0x88);
+                        roomPots.Add(new FilledPot(roomEmptyPots[pid].x, roomEmptyPots[pid].y, 0x88));
+                        roomEmptyPots.RemoveAt(pid);
+                        reservedswitches = roomItems.Contains(0x88) ? reservedswitches - 1 : 0;
                     }
                 }
 
