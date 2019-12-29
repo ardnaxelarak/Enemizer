@@ -60,8 +60,6 @@ namespace EnemizerLibrary
 
             rand = new Random(seed);
 
-            Graph graph = new Graph(new GraphData(this.ROM_DATA, this.optionFlags));
-
             if (skin != "Unchanged" && skin != "")
             {
                 ChangeSkin(skin);
@@ -100,6 +98,8 @@ namespace EnemizerLibrary
             // -----bosses---------------------
             if (optionFlags.RandomizeBosses)
             {
+                Graph graph = optionflags.UseManualBosses ? null : new Graph(new GraphData(this.ROM_DATA, this.optionFlags));
+
                 this.ROM_DATA.CloseBlindDoor = true;
 
                 BossRandomizer br;
