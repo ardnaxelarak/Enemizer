@@ -16,8 +16,17 @@ namespace EnemizerCLI.Core
             var options = new CommandLineOptions();
             if (CommandLine.Parser.Default.ParseArgumentsStrict(args, options))
             {
-                Stopwatch stopwatch = Stopwatch.StartNew();
-                MakeEnemizerPatch(options);
+                Stopwatch stopwatch = new Stopwatch();
+                if (options.BinaryMode)
+				{
+                    stopwatch.Start();
+                    MakeEnemizerRom(options);
+				}
+                else
+				{
+                    stopwatch.Start();
+                    MakeEnemizerJsonPatch(options);
+                }
                 stopwatch.Stop();
                 Console.WriteLine($"Seed generated in: {stopwatch.Elapsed}");
             }
@@ -27,49 +36,81 @@ namespace EnemizerCLI.Core
             }
         }
 
-        static void MakeEnemizerPatch(CommandLineOptions options)
+		private static void MakeEnemizerRom(CommandLineOptions options)
+		{
+			var optionFlags = JsonConvert.DeserializeObject<OptionFlags>(File.ReadAllText(options.EnemizerOptionsJsonFilename));
+
+            byte[] rawData = File.ReadAllBytes(options.BaseRomFilename);
+            Array.Resize(ref rawData, 2 * 1024 * 1024);
+
+            RomData romData = new RomData(rawData);
+            ThrowIfAlreadyEnemized(romData);
+
+			int seed = GetSeed(options);
+			byte[] enemPatch = GenerateRom(seed, rawData, optionFlags);
+
+			File.WriteAllBytes(options.OutputFilePath, enemPatch);
+			Console.WriteLine($"Generated SFC file {options.OutputFilePath}");
+		}
+
+		static void MakeEnemizerJsonPatch(CommandLineOptions options)
         {
             var basePatchJson = File.ReadAllText(options.BasePatchJsonFilename);
             var randoPatchJson = File.ReadAllText(options.RandomizerPatchJsonFilename);
             var optionFlags = JsonConvert.DeserializeObject<OptionFlags>(File.ReadAllText(options.EnemizerOptionsJsonFilename));
 
-            RandomizerPatch randoPatch = new RandomizerPatch(basePatchJson, randoPatchJson);
+            byte[] rawData = File.ReadAllBytes(options.BaseRomFilename);
+            Array.Resize(ref rawData, 2 * 1024 * 1024);
 
+            RomData romData = new RomData(rawData);
+            ThrowIfAlreadyEnemized(romData);
 
-            // load base rom
-            FileStream fs = new FileStream(options.BaseRomFilename, FileMode.Open, FileAccess.Read);
-            byte[] rom_data = new byte[fs.Length];
-            fs.Read(rom_data, 0, (int)fs.Length);
-            fs.Close();
+            int seed = GetSeed(options);
+            var enemPatch = GenerateSeed(seed, rawData, optionFlags);
+            var patchJson = JsonConvert.SerializeObject(enemPatch);
 
-            Array.Resize(ref rom_data, 2 * 1024 * 1024);
+            File.WriteAllText(options.OutputFilePath, patchJson);
+            Console.WriteLine($"Generated JSON file {options.OutputFilePath}");
+        }
 
-            randoPatch.PatchRom(ref rom_data);
+        static List<PatchObject> GenerateSeed(int seed, byte[] rom_data, OptionFlags optionFlags)
+        {
+            RomData randomizedRom = RandomizeRom(seed, rom_data, optionFlags);
 
-#if DEBUG
-            FileStream testout = new FileStream("rando output.sfc", FileMode.OpenOrCreate, FileAccess.Write);
-            testout.Write(rom_data, 0, rom_data.Length);
-            testout.Close();
-#endif
+            return randomizedRom.GeneratePatch();
+        }
 
-            RomData romData = new RomData(rom_data);
+        static byte[] GenerateRom(int seed, byte[] rom_data, OptionFlags optionFlags)
+		{
+			RomData randomizedRom = RandomizeRom(seed, rom_data, optionFlags);
 
-            if (romData.IsEnemizerRom)
-            {
-                throw new Exception("How is the base rom an enemizer rom?");
-            }
+			var romfs = new MemoryStream();
+			randomizedRom.WriteRom(romfs);
+			romfs.Flush();
 
+			var romBytes = romfs.ToArray();
+			return romBytes;
+		}
+
+		private static RomData RandomizeRom(int seed, byte[] rom_data, OptionFlags optionFlags)
+		{
+			RomData romData = new RomData(rom_data);
+			Randomization randomize = new Randomization();
+			RomData randomizedRom = randomize.MakeRandomization("", seed, optionFlags, romData, "");
+			return randomizedRom;
+		}
+
+		private static int GetSeed(CommandLineOptions options)
+        {
             Random rand = new Random();
-
-            int seed;
-            if (String.IsNullOrEmpty(options.SeedNumber))
+            if (string.IsNullOrEmpty(options.SeedNumber))
             {
-                seed = rand.Next(0, 999999999);
+                return rand.Next(0, 999999999);
             }
             else
             {
                 // TODO: add validation to the textbox so it can't be anything but a number
-                if (!int.TryParse(options.SeedNumber, out seed))
+                if (!int.TryParse(options.SeedNumber, out var seed))
                 {
                     throw new Exception("Invalid Seed Number entered. Please enter an integer value.");
                 }
@@ -77,25 +118,16 @@ namespace EnemizerCLI.Core
                 {
                     throw new Exception("Please enter a positive Seed Number.");
                 }
+                return seed;
             }
-
-            // TODO: add spoiler
-            var enemPatch = GenerateSeed(seed, rom_data, optionFlags);
-
-            var patchJson = JsonConvert.SerializeObject(enemPatch);
-
-            File.WriteAllText(options.OutputPatchJsonFilename, patchJson);
-
-            Console.WriteLine($"Generated file {options.OutputPatchJsonFilename}");
         }
 
-        static List<PatchObject> GenerateSeed(int seed, byte[] rom_data, OptionFlags optionFlags)
+        private static void ThrowIfAlreadyEnemized(RomData romData)
         {
-            RomData romData = new RomData(rom_data);
-            Randomization randomize = new Randomization();
-            RomData randomizedRom = randomize.MakeRandomization("", seed, optionFlags, romData, "");
-
-            return randomizedRom.GeneratePatch();
+            if (romData.IsEnemizerRom)
+            {
+                throw new Exception("It appears that the provided base ROM is already enemized. Please ensure you are using an original game ROM.");
+            }
         }
 
         [HelpOption]
