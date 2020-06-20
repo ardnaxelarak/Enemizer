@@ -44,11 +44,20 @@ namespace EnemizerLibrary
         private void RandomizeRooms(OptionFlags optionFlags)
         {
             roomCollection.LoadRooms();
-
             roomCollection.RandomizeRoomSpriteGroups(spriteGroupCollection);
 
-            foreach (var room in roomCollection.Rooms.Where(x => RoomIdConstants.DontRandomizeRooms.Contains(x.RoomId) == false))
+            foreach (var room in roomCollection.Rooms)
             {
+                if (RoomIdConstants.DontRandomizeRooms.Contains(room.RoomId))
+				{
+                    continue;
+				}
+
+                if (romData.IsRandomizerStandardMode && RoomIdConstants.NoSpecialEnemiesRoomsInStandardMode.Contains(room.RoomId))
+				{
+                    continue;
+				}
+
                 room.RandomizeSprites(rand, optionFlags, spriteGroupCollection, spriteRequirementCollection);
 
                 // randomize the pot sprite table

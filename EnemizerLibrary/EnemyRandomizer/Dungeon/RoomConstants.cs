@@ -813,6 +813,32 @@ namespace EnemizerLibrary
             0, 1, 3, 13, 20, 32, 48, RoomIdConstants.R127_IcePalace_BigSpikeTrapsRoom
         };
 
+        public static readonly int[] NoSpecialEnemiesRoomsInStandardMode =
+        {
+            R1_HyruleCastle_NorthCorridor,
+            R2_HyruleCastle_SwitchRoom,
+            R17_HyruleCastle_BombableStockRoom,
+            R33_HyruleCastle_KeyRatRoom,
+            R34_HyruleCastle_SewerTextTriggerRoom,
+            R50_HyruleCastle_SewerKeyChestRoom,
+            R65_HyruleCastle_FirstDarkRoom,
+            R66_HyruleCastle_6RopesRoom,
+            R80_HyruleCastle_WestCorridor,
+            R81_HyruleCastle_ThroneRoom,
+            R82_HyruleCastle_EastCorridor,
+            R85_CastleSecretEntrance_UncleDeathRoom,
+            R96_HyruleCastle_WestEntranceRoom,
+            R97_HyruleCastle_MainEntranceRoom,
+            R98_HyruleCastle_EastEntranceRoom,
+            R112_HyruleCastle_SmallCorridortoJailCells,
+            R113_HyruleCastle_BoomerangChestRoom,
+            R114_HyruleCastle_MapChestRoom,
+            R128_HyruleCastle_JailCellRoom,
+            R129_HyruleCastle_NextToChasmRoom,
+            R130_HyruleCastle_BasementChasmRoom,
+
+        };
+
         /*
         public static readonly int[] RandomizeRooms =
         {

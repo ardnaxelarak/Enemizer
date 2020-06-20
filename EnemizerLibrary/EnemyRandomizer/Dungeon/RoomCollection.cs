@@ -39,8 +39,18 @@ namespace EnemizerLibrary
         public void RandomizeRoomSpriteGroups(SpriteGroupCollection spriteGroups)
         {
             // skip rooms that are set to do not randomize because that would be pointless to process them
-            foreach (var r in Rooms.Where(x => RoomIdConstants.DontRandomizeRooms.Contains(x.RoomId) == false))
+            foreach (var r in Rooms)
             {
+                if (RoomIdConstants.DontRandomizeRooms.Contains(r.RoomId))
+				{
+                    continue;
+				}
+
+                if (romData.IsRandomizerStandardMode && RoomIdConstants.NoSpecialEnemiesRoomsInStandardMode.Contains(r.RoomId))
+				{
+                    continue;
+				}
+
                 List<SpriteRequirement> doNotUpdateSprites = spriteRequirementCollection
                                                             .DoNotRandomizeSprites
                                                             .Where(x => x.CanSpawnInRoom(r)

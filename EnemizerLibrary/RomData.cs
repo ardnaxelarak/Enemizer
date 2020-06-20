@@ -35,6 +35,7 @@ namespace EnemizerLibrary
         public const int EnableTerrorpinAiFixFlag = 0x06;
         public const int ChecksumComplimentAddress = 0x7FDC;
         public const int ChecksumAddress = 0x7FDE;
+        public const int RandomizerModeFlag = 0x180032;
 
         public StringBuilder Spoiler { get; private set; } = new StringBuilder();
 
@@ -381,6 +382,14 @@ namespace EnemizerLibrary
                 return false;
             }
         }
+
+        public bool IsRandomizerStandardMode
+		{
+            get
+			{
+                return IsRandomizerRom && romData[RandomizerModeFlag] == 0x00;
+			}
+		}
 
         public bool IsItemRandomizerRom
         {
