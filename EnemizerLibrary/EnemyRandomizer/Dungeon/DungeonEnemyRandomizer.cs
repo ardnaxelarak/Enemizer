@@ -44,7 +44,7 @@ namespace EnemizerLibrary
         private void RandomizeRooms(OptionFlags optionFlags)
         {
             roomCollection.LoadRooms();
-            roomCollection.RandomizeRoomSpriteGroups(spriteGroupCollection);
+            roomCollection.RandomizeRoomSpriteGroups(spriteGroupCollection, optionFlags);
 
             foreach (var room in roomCollection.Rooms)
             {
@@ -53,7 +53,7 @@ namespace EnemizerLibrary
                     continue;
 				}
 
-                if (romData.IsRandomizerStandardMode && RoomIdConstants.NoSpecialEnemiesRoomsInStandardMode.Contains(room.RoomId))
+                if (optionFlags.EasyModeEscape && romData.IsRandomizerStandardMode && RoomIdConstants.NoSpecialEnemiesRoomsInStandardMode.Contains(room.RoomId))
 				{
                     continue;
 				}

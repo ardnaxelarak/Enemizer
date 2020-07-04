@@ -36,7 +36,7 @@ namespace EnemizerLibrary
             }
         }
 
-        public void RandomizeRoomSpriteGroups(SpriteGroupCollection spriteGroups)
+        public void RandomizeRoomSpriteGroups(SpriteGroupCollection spriteGroups, OptionFlags optionFlags)
         {
             // skip rooms that are set to do not randomize because that would be pointless to process them
             foreach (var r in Rooms)
@@ -46,7 +46,7 @@ namespace EnemizerLibrary
                     continue;
 				}
 
-                if (romData.IsRandomizerStandardMode && RoomIdConstants.NoSpecialEnemiesRoomsInStandardMode.Contains(r.RoomId))
+                if (optionFlags.EasyModeEscape && romData.IsRandomizerStandardMode && RoomIdConstants.NoSpecialEnemiesRoomsInStandardMode.Contains(r.RoomId))
 				{
                     continue;
 				}
