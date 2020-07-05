@@ -53,7 +53,7 @@ namespace EnemizerLibrary
                     continue;
 				}
 
-                if (optionFlags.EasyModeEscape && romData.IsRandomizerStandardMode && RoomIdConstants.NoSpecialEnemiesRoomsInStandardMode.Contains(room.RoomId))
+                if (optionFlags.EasyModeEscape && RoomIdConstants.NoSpecialEnemiesRoomsInStandardMode.Contains(room.RoomId))
 				{
                     continue;
 				}
