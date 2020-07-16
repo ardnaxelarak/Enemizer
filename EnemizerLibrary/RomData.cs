@@ -303,7 +303,8 @@ namespace EnemizerLibrary
                 {
                     (0x56, 0x54), // item randomizer: VT
                     (0x45, 0x52), // entrance randomizer: ER
-                    (0x42, 0x4D), // berserker's multiworld: MW
+                    (0x42, 0x4D), // berserker's multiworld: BM
+		    (0x42, 0x44), // berserker's multiworld doors: BD
                     (0x44, 0x52)  // door randomizer: DR
                 };
 
