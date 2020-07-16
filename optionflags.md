@@ -55,7 +55,6 @@
 &emsp;"[ShuffleMusic](#ShuffleMusic)": false,
 &emsp;"[BootlegMagic](#BootlegMagic)": true,
 &emsp;"[CustomBosses](#CustomBosses)": false,
-&emsp;"[AndyMode](#AndyMode)": false,
 &emsp;"[HeartBeepSpeed](#HeartBeepSpeed)": 2,
 &emsp;"[AlternateGfx](#AlternateGfx)": false,
 &emsp;"[ShieldGraphics](#ShieldGraphics)": "shield_gfx\\normal.gfx",
@@ -233,9 +232,6 @@ Bootleg Chinese inspired magic (currently just gives Moldorm random number of ey
 
 ### <a name="CustomBosses"></a>CustomBosses (boolean)
 Currently not implemented
-
-### <a name="AndyMode"></a>AndyMode (boolean)
-Adds Andy inspired soundfx for chest opening. Forces pug sprite into sprite pool if RandomizeSpriteOnHit is enabled. Requires pug sprite to be in `sprites` directory.
 
 ### <a name="HeartBeepSpeed"></a>HeartBeepSpeed (enum/number)
 Heart beep speed. This will override randomizer setting, so make sure they are the same.

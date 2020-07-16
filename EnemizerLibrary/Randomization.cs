@@ -33,7 +33,6 @@ namespace EnemizerLibrary
                 seed = ResetEnemizerRom();
             }
             this.ROM_DATA.ExpandRom();
-            this.ROM_DATA.SetCharacterSelectScreenVersion();
             this.ROM_DATA.EnemizerSeed = seed;
             this.ROM_DATA.SetRomInfoOptionFlags(this.optionFlags);
 
@@ -334,10 +333,6 @@ namespace EnemizerLibrary
 
             SetHeartBeepSpeed(optionflags.HeartBeepSpeed);
 
-            if (optionFlags.AndyMode)
-            {
-                SetAndyMode();
-            }
 
             if (optionFlags.MuteMusicEnableMSU1)
             {
@@ -598,17 +593,6 @@ namespace EnemizerLibrary
                 newGfxPosition += length;
                 zipstream.Close();
             }
-        }
-
-    
-
-        void SetAndyMode()
-        {
-            this.ROM_DATA[0xD0D58] = 0x00; // set soundfx3 background note 00
-            this.ROM_DATA[0xD0D97] = 0x00; // set soundfx3 background note 2(?) 00
-
-            byte[] newSoundInstrument = { 0xE0, 0x19, 0x7F, 0x97, 0x00 }; // set instrument 19, length 7F, play note 97 (B oct2), end
-            this.ROM_DATA.WriteDataChunk(0xD1869, newSoundInstrument); // set soundfx3 background note 00
         }
 
         void SetHeartBeepSpeed(HeartBeepSpeed beepSpeed)
@@ -1513,32 +1497,8 @@ namespace EnemizerLibrary
             }
 
             int i = 0;
-            FileStream fsx;
             int r;
             string filename;
-
-            if (optionFlags.AndyMode)
-            {
-                // force pug sprite
-                r = skins.IndexOf(skins.Where(x => x.Contains("pug.spr") || x.Contains("pug.zspr")).FirstOrDefault());
-                if (r >= 0)
-                {
-                    filename = skins[r];
-                    filename = Path.Combine(EnemizerBasePath.Instance.BasePath, filename);
-
-                    try
-                    {
-                        Sprite s = new Sprite(File.ReadAllBytes(filename));
-                        WriteSpriteToTable(rom, i, s);
-                    }
-                    catch { }
-                    finally
-                    {
-                        skins.RemoveAt(r);
-                    }
-                    i++;
-                }
-            }
 
             for (; i < totalSprites && skins.Count > 0; i++)
             {

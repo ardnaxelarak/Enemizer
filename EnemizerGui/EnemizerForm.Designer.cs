@@ -96,7 +96,6 @@
             this.heartBeepSpeedTrackbar = new System.Windows.Forms.TrackBar();
             this.lblHeartBeepSpeed = new System.Windows.Forms.Label();
             this.alternateGfxCheckbox = new System.Windows.Forms.CheckBox();
-            this.andyModeCheckbox = new System.Windows.Forms.CheckBox();
             this.customBossesCheckbox = new System.Windows.Forms.CheckBox();
             this.shufflePotContentsCheckbox = new System.Windows.Forms.CheckBox();
             this.shuffleMusicCheckBox = new System.Windows.Forms.CheckBox();
@@ -777,7 +776,6 @@
             this.tabExtra.Controls.Add(this.heartBeepSpeedTrackbar);
             this.tabExtra.Controls.Add(this.lblHeartBeepSpeed);
             this.tabExtra.Controls.Add(this.alternateGfxCheckbox);
-            this.tabExtra.Controls.Add(this.andyModeCheckbox);
             this.tabExtra.Controls.Add(this.customBossesCheckbox);
             this.tabExtra.Controls.Add(this.shufflePotContentsCheckbox);
             this.tabExtra.Controls.Add(this.shuffleMusicCheckBox);
@@ -932,17 +930,6 @@
             this.alternateGfxCheckbox.Text = "Alternate Gfx";
             this.alternateGfxCheckbox.UseVisualStyleBackColor = true;
             this.alternateGfxCheckbox.CheckedChanged += new System.EventHandler(this.alternateGfxCheckbox_CheckedChanged);
-            // 
-            // andyModeCheckbox
-            // 
-            this.andyModeCheckbox.AutoSize = true;
-            this.andyModeCheckbox.Location = new System.Drawing.Point(7, 30);
-            this.andyModeCheckbox.Name = "andyModeCheckbox";
-            this.andyModeCheckbox.Size = new System.Drawing.Size(80, 17);
-            this.andyModeCheckbox.TabIndex = 12;
-            this.andyModeCheckbox.Text = "Andy Mode";
-            this.andyModeCheckbox.UseVisualStyleBackColor = true;
-            this.andyModeCheckbox.CheckedChanged += new System.EventHandler(this.andyModeCheckbox_CheckedChanged);
             // 
             // customBossesCheckbox
             // 
@@ -1361,7 +1348,6 @@
         private System.Windows.Forms.CheckBox shufflePotContentsCheckbox;
         private System.Windows.Forms.CheckBox shuffleMusicCheckBox;
         private System.Windows.Forms.CheckBox pukeModeCheckbox;
-        private System.Windows.Forms.CheckBox andyModeCheckbox;
         private System.Windows.Forms.TrackBar heartBeepSpeedTrackbar;
         private System.Windows.Forms.Label lblHeartBeepSpeed;
         private System.Windows.Forms.Label heartBeepSpeedLabel;

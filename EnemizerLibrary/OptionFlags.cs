@@ -60,7 +60,6 @@ namespace EnemizerLibrary
         public bool BootlegMagic { get; set; } = false;
         public bool DebugMode { get; set; } = false;
         public bool CustomBosses { get; set; }
-        public bool AndyMode { get; set; } = false;
         public HeartBeepSpeed HeartBeepSpeed { get; set; } = HeartBeepSpeed.Half;
         public bool AlternateGfx { get; set; }
         public string ShieldGraphics { get; set; } = "shield_gfx\\normal.gfx";
@@ -192,7 +191,6 @@ namespace EnemizerLibrary
             this.BootlegMagic = Convert.ToBoolean(optionBytes[i++]);
             this.DebugMode = Convert.ToBoolean(optionBytes[i++]);
             this.CustomBosses = Convert.ToBoolean(optionBytes[i++]);
-            this.AndyMode = Convert.ToBoolean(optionBytes[i++]);
             this.HeartBeepSpeed = (EnemizerLibrary.HeartBeepSpeed)optionBytes[i++];
             this.AlternateGfx = Convert.ToBoolean(optionBytes[i++]);
             //this.ShieldGraphics = optionBytes[i++];
@@ -305,7 +303,6 @@ namespace EnemizerLibrary
             ret[i++] = Convert.ToByte(this.BootlegMagic);
             ret[i++] = Convert.ToByte(this.DebugMode);
             ret[i++] = Convert.ToByte(this.CustomBosses);
-            ret[i++] = Convert.ToByte(this.AndyMode);
             ret[i++] = (byte)this.HeartBeepSpeed;
             ret[i++] = Convert.ToByte(this.AlternateGfx);
             ret[i++] = 0; // (byte)this.ShieldGraphics;
