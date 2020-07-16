@@ -9,4 +9,4 @@ Feel free to report issues and make PRs to this repo, although I make no guarant
 
 ## Licensing
 
-All commits/changes authored by Ijwu <Hussein Farran> are licensed under WTFPL. All previous code is unlicensed and sits in legal gray zone. Due to lack of enforcement on unlicensed code, I will be operating as if the project is entirely under WTFPL.
+All commits/changes authored by Ijwu \<Hussein Farran\> are licensed under WTFPL. All previous code is unlicensed and sits in legal gray zone. Due to lack of enforcement on unlicensed code, I will be operating as if the project is entirely under WTFPL.
