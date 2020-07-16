@@ -295,67 +295,24 @@ namespace EnemizerLibrary
 
         }
 
-        public void SetCharacterSelectScreenVersion()
-        {
-            byte versionMajor = Version.MajorVersion;
-            byte versionMinor = Version.MinorVersion;
-
-            byte buildFirst = Version.BuildNumber / 10;
-            byte buildSecond = Version.BuildNumber % 10;
-
-            var text = new byte[]
-            {
-                // top
-                0x63, 0x25, 0x00, 0x19,
-                0x64, 0x1D, // K (top)
-                0x62, 0x1D, // I (top)
-                0x65, 0x1D, // L (top)
-                0x65, 0x1D, // L (top)
-                0x88, 0x01, // space
-                0x4E, 0x15, // E (top)
-                0x67, 0x15, // N (top)
-                (byte)(0x40 | versionMajor), 0x15, // number (top)
-                //0x88, 0x01, // space
-                0x88, 0x01, // space
-                (byte)(0x40 | versionMinor), 0x15, // number (top)
-                0x88, 0x01, // space
-                (byte)(0x40 | buildFirst), 0x15, // number (top)
-                (byte)(0x40 | buildSecond), 0x15, // number (top)
-                // bottom
-                0x63, 0x45, 0x00, 0x19,
-                0x74, 0x1D, // K (bottom)
-                0x72, 0x1D, // I (bottom)
-                0x75, 0x1D, // L (bottom)
-                0x75, 0x1D, // L (bottom)
-                0x88, 0x01, // space
-                0x5E, 0x15, // E (bottom)
-                0x77, 0x15, // N (bottom)
-                (byte)(0x50 | versionMajor), 0x15, // number (bottom)
-                0x9D, 0x15, // . (bottom)
-                (byte)(0x50 | versionMinor), 0x15, // number (bottom)
-                0x9D, 0x15, // . (bottom)
-                (byte)(0x50 | buildFirst), 0x15, // number (top)
-                (byte)(0x50 | buildSecond), 0x15, // number (top)
-            };
-
-            Array.Copy(text, 0, romData, 0x65E94, text.Length);
-
-            SetPatchBytes(0x65E94, text.Length);
-        }
-
         public bool IsRandomizerRom
         {
             get
             {
-                // item randomizer
-                if (romData[0x7FC0] == 0x56 && romData[0x7FC1] == 0x54)
+                List<(int, int)> acceptableAbbreviations = new List<(int,int)>
                 {
-                    return true;
-                }
-                // entrance randomizer
-                if (romData[0x7FC0] == 0x45 && romData[0x7FC1] == 0x52)
+                    (0x56, 0x54), // item randomizer: VT
+                    (0x45, 0x52), // entrance randomizer: ER
+                    (0x42, 0x4D), // berserker's multiworld: MW
+                    (0x44, 0x52)  // door randomizer: DR
+                };
+
+                foreach (var abbr in acceptableAbbreviations)
                 {
-                    return true;
+                    if (romData[0x7FC0] == abbr.Item1 && romData[0x7FC1] == abbr.Item2)
+                    {
+                        return true;
+                    }
                 }
 
                 if(romData[0x7FC0] == 'Z' 
@@ -452,16 +409,16 @@ namespace EnemizerLibrary
                     return true;
                 }
 
-                if (romData[0x7FC0] == 0x56
-                    && romData[0x7FC1] == 0x54
-                    && romData[0x7FC2] == 0x20
-                    && romData[0x7FC3] == 0x54
-                    && romData[0x7FC4] == 0x4F
-                    && romData[0x7FC5] == 0x55
-                    && romData[0x7FC6] == 0x52
-                    && romData[0x7FC7] == 0x4E
-                    && romData[0x7FC8] == 0x45
-                    && romData[0x7FC9] == 0x59
+                if (romData[0x7FC0] == 0x56    // V
+                    && romData[0x7FC1] == 0x54 // T
+                    && romData[0x7FC2] == 0x20 // <space>
+                    && romData[0x7FC3] == 0x54 // T
+                    && romData[0x7FC4] == 0x4F // O
+                    && romData[0x7FC5] == 0x55 // U
+                    && romData[0x7FC6] == 0x52 // R
+                    && romData[0x7FC7] == 0x4E // N
+                    && romData[0x7FC8] == 0x45 // E
+                    && romData[0x7FC9] == 0x59 // Y
                     )
                 {
                     return true;
