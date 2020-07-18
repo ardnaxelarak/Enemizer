@@ -75,7 +75,7 @@ namespace EnemizerLibrary
 
         void UpdateRomHook()
         {
-            var spawnBeesAddress = XkasSymbols.Instance.Symbols["Spawn_Bees"];
+            var spawnBeesAddress = AsarSymbols.Instance.Symbols["Spawn_Bees"];
             var snesAddress = Utilities.PCAddressToSnesByteArray(spawnBeesAddress);
 
             // z3randomizer:

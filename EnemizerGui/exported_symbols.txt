@@ -1,23 +1,174 @@
-EnemizerTablesStart = $408000
-EnemizerCodeStart = $4094f5
-sprite_bush_spawn_table_overworld = $408120
-sprite_bush_spawn_table_dungeons = $408248
-sprite_bush_spawn_table_random_sprites = $408370
-EnemizerFlags = $408100
-EnemizerFlags_randomize_bushes = $408100
-EnemizerFlags_close_blind_door = $408101
-EnemizerFlags_moldorm_eye_count = $408102
-EnemizerFlags_randomize_sprites = $408103
-EnemizerFlags_agahnim_fun_balls = $408104
-EnemizerFlags_enable_mimic_override = $408105
-EnemizerFlags_enable_terrorpin_ai_fix = $408106
-room_header_table = $408375
-enemizer_info_table = $408000
-moved_room_header_bank_value_address = $408374
-modified_room_object_table = $40b84a
-DMAKholdstare = $4095a5
-swordgfx = $409b62
-shieldgfx = $40ab62
-Spawn_Bees = $40b7ee
-notItemSprite_Mimic = $409af7
-sprite_bush_spawn_item_table = $409525
+[labels]
+40:975B :pos_1_0
+40:976A :pos_1_1
+40:9816 :pos_1_10
+40:9825 :pos_1_11
+40:9834 :pos_1_12
+40:9842 :pos_1_13
+40:9848 :pos_1_14
+40:984E :pos_1_15
+40:9870 :pos_1_16
+40:9895 :pos_1_17
+40:989B :pos_1_18
+40:98A1 :pos_1_19
+40:9784 :pos_1_2
+40:98C3 :pos_1_20
+40:98E8 :pos_1_21
+40:98EE :pos_1_22
+40:98F4 :pos_1_23
+40:9916 :pos_1_24
+40:993B :pos_1_25
+40:9941 :pos_1_26
+40:9947 :pos_1_27
+40:9969 :pos_1_28
+40:9B36 :pos_1_29
+40:9793 :pos_1_3
+40:97A2 :pos_1_4
+40:97B1 :pos_1_5
+40:97D2 :pos_1_6
+40:97E5 :pos_1_7
+40:97F4 :pos_1_8
+40:9803 :pos_1_9
+40:99AF CheckIfLinkShouldDie
+40:99B8 CheckIfLinkShouldDie_dead
+40:99BA CheckIfLinkShouldDie_done
+40:B7A4 CopyShield
+40:B7BA CopyShield_loop_copy
+40:B7DC CopyShield_shield_positon_gfx
+40:B762 CopySword
+40:B778 CopySword_loop_copy
+40:B79A CopySword_sword_positon_gfx
+40:95A5 DMAKholdstare
+40:9617 DMATrinexx
+09:C114 Dungeon_ResetSprites
+40:94F5 EnemizerCodeStart
+40:8100 EnemizerFlags
+40:8104 EnemizerFlags_agahnim_fun_balls
+40:8101 EnemizerFlags_close_blind_door
+40:8105 EnemizerFlags_enable_mimic_override
+40:8106 EnemizerFlags_enable_terrorpin_ai_fix
+40:8102 EnemizerFlags_moldorm_eye_count
+40:8100 EnemizerFlags_randomize_bushes
+40:8103 EnemizerFlags_randomize_sprites
+40:8000 EnemizerTablesStart
+29:803C Ext_OnBossDeath
+29:804B Ext_OnDungeonCompleted
+29:8041 Ext_OnDungeonEnter
+29:8046 Ext_OnDungeonExit
+29:8019 Ext_OnFairyRevive
+29:8000 Ext_OnFileCreate
+29:8005 Ext_OnFileLoad
+29:800A Ext_OnFileSave
+29:8023 Ext_OnIemMenuOpen
+29:802D Ext_OnItemChange
+29:8028 Ext_OnItemMenuClose
+29:8014 Ext_OnMapUse
+29:8037 Ext_OnPlayerAttack
+29:8032 Ext_OnPlayerDamaged
+29:800F Ext_OnPlayerDeath
+29:801E Ext_OnYItemUse
+29:8050 Ext_OnZeldaRescued
+40:971A FixTerrorpin
+40:9726 FixTerrorpin_new
+40:C84A GFX_Kholdstare_Shell
+40:D84A GFX_Trinexx_Shell
+40:E04A GFX_Trinexx_Shell2
+0D:BA71 GetRandomInt
+0D:D97F Kholdstare_Draw
+40:9B18 LoadFile
+40:9B2F LoadNewSoundFx
+40:B7E4 LoadOverworldSprites
+02:8118 Module_LoadFile_indoors
+40:99E4 Moldorm_UpdateOamPosition
+40:99EA Moldorm_UpdateOamPosition_more_eyes
+40:956C NMIHookAction
+40:9584 NMIHookAction_loadKholdstare
+40:9590 NMIHookAction_loadTrinexx
+40:959A NMIHookAction_return
+00:80D5 NMIHookReturn
+40:9B29 NewLoadSoundBank
+40:9B23 NewLoadSoundBank_Intro
+40:96FA OnInitFileSelect
+40:970F OnInitFileSelect_continue
+40:99FF Palette_ArmorAndGloves
+40:9A27 Palette_ArmorAndGloves_continue
+40:9A55 Palette_ArmorAndGloves_loop
+40:9A14 Palette_ArmorAndGloves_part_two
+07:8000 Player_Main
+00:8888 Sound_LoadSongBank
+0D:BB8A Sound_SetSfx3PanLong
+0D:BB67 Sound_SetSfxPanWithPlayerCoords
+40:B7EE Spawn_Bees
+40:B80A Spawn_Bees_done
+1E:C6FA SpritePrep_Eyegore
+40:9AAB SpritePrep_EyegoreNew
+40:9AC2 SpritePrep_EyegoreNew_mimic
+40:9AB6 SpritePrep_EyegoreNew_new
+09:C44E Sprite_ResetAll
+1D:F65D Sprite_SpawnDynamically
+1E:DAC3 Sprite_SpawnDynamically_hasbeendamaged
+40:B80B VitreousKeyReset
+40:9740 boss_move
+40:9932 boss_move_loop_bottom_left
+40:9960 boss_move_loop_bottom_left2
+40:98DF boss_move_loop_bottom_right
+40:990D boss_move_loop_bottom_right2
+40:9839 boss_move_loop_middle
+40:9867 boss_move_loop_middle2
+40:988C boss_move_loop_top_right
+40:98BA boss_move_loop_top_right2
+40:9930 boss_move_move_to_bottom_left
+40:98DD boss_move_move_to_bottom_right
+40:9837 boss_move_move_to_middle
+40:988A boss_move_move_to_top_right
+40:97CF boss_move_no_blind_door
+40:9860 boss_move_no_change
+40:98B3 boss_move_no_change2
+40:9906 boss_move_no_change3
+40:9959 boss_move_no_change4
+40:9882 boss_move_no_change_ov
+40:98D5 boss_move_no_change_ov2
+40:9928 boss_move_no_change_ov3
+40:997B boss_move_no_change_ov4
+40:9983 boss_move_return
+40:99BB change_heartcontainer_position
+40:99DE change_heartcontainer_position_not_moldorm_room
+40:9A71 change_sprite
+40:9A8D change_sprite_continue
+40:972E check_special_action
+40:973B check_special_action_no_special_action
+40:8000 enemizer_info_table
+07:80D5 linkIsDead
+07:80F7 linkNotDead
+40:B84A modified_room_object_table
+40:8374 moved_room_header_bank_value_address
+40:B813 newAgahBall
+40:B828 newAgahBall_damage
+40:B849 newAgahBall_no_damage
+40:9A93 newKodongoCollision
+40:9AAA newKodongoCollision_continue
+40:9984 new_kholdstare_code
+40:9994 new_kholdstare_code_already_iced
+40:9999 new_trinexx_code
+40:99A9 new_trinexx_code_already_rocked
+40:9AF7 notItemSprite_Mimic
+40:9B0B notItemSprite_Mimic_changeSpriteId
+40:9B13 notItemSprite_Mimic_continue
+40:9B10 notItemSprite_Mimic_reloadSpriteIdAndSkipMimic
+40:9ADF resetSprite_Mimic
+40:9AF1 resetSprite_Mimic_notMimic
+40:8375 room_header_table
+40:AB62 shieldgfx
+40:94F5 sprite_bush_spawn
+40:950F sprite_bush_spawn_continue
+40:9565 sprite_bush_spawn_dontGoPhase2
+40:9525 sprite_bush_spawn_item_table
+40:954C sprite_bush_spawn_newSpriteSpawn
+40:953B sprite_bush_spawn_not_random
+40:950B sprite_bush_spawn_not_random_old
+40:9568 sprite_bush_spawn_return
+40:8120 sprite_bush_spawn_table
+40:8248 sprite_bush_spawn_table_dungeons
+40:8120 sprite_bush_spawn_table_overworld
+40:8370 sprite_bush_spawn_table_random_sprites
+40:9B62 swordgfx

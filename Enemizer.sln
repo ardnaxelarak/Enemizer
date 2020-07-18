@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnemizerCLI.Core", "Enemize
 		{0FAA42FE-8942-4CDA-98DD-8BF0E8BCBD7D} = {0FAA42FE-8942-4CDA-98DD-8BF0E8BCBD7D}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinComp", "bincomp\BinComp.csproj", "{60DE5245-1818-4114-855F-822AA5FD2B6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,14 @@ Global
 		{1DF0B56B-DC22-4DE5-93C9-DB379DE3AA23}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1DF0B56B-DC22-4DE5-93C9-DB379DE3AA23}.Release|x86.ActiveCfg = Release|Any CPU
 		{1DF0B56B-DC22-4DE5-93C9-DB379DE3AA23}.Release|x86.Build.0 = Release|Any CPU
+		{60DE5245-1818-4114-855F-822AA5FD2B6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60DE5245-1818-4114-855F-822AA5FD2B6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60DE5245-1818-4114-855F-822AA5FD2B6C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60DE5245-1818-4114-855F-822AA5FD2B6C}.Debug|x86.Build.0 = Debug|Any CPU
+		{60DE5245-1818-4114-855F-822AA5FD2B6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60DE5245-1818-4114-855F-822AA5FD2B6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60DE5245-1818-4114-855F-822AA5FD2B6C}.Release|x86.ActiveCfg = Release|Any CPU
+		{60DE5245-1818-4114-855F-822AA5FD2B6C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

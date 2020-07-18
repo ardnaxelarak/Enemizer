@@ -10,14 +10,14 @@ namespace EnemizerLibrary
     public class AddressConstants
     {
         // enemizer header patched rom
-        public static int dungeonHeaderBaseAddress = XkasSymbols.Instance.Symbols["room_header_table"]; //0x120090;
+        public static int dungeonHeaderBaseAddress = AsarSymbols.Instance.Symbols["room_header_table"]; //0x120090;
 
         public const int RoomHeaderBankLocation = 0x0B5E7;
 
         public const int dungeonHeaderPointerTableBaseAddress = 0x271E2;
         public const int dungeonSpritePointerTableBaseAddress = 0x4D62E;
 
-        public static int movedRoomObjectBaseAddress = XkasSymbols.Instance.Symbols["modified_room_object_table"]; // 0x122000;
+        public static int movedRoomObjectBaseAddress = AsarSymbols.Instance.Symbols["modified_room_object_table"]; // 0x122000;
         public const int ObjectDataPointerTableAddress = 0xF8000;
 
         public const int OverworldAreaGraphicsBlockBaseAddress = 0x007A81;
