@@ -15,7 +15,7 @@ namespace BinComp
 		private static void Main(string[] args)
 		{
 			Logger.Debug("BinComp ---- ");
-			if (args.Length != 2)
+			if (args.Length != 3)
 			{
 				PrintUsage();
 				return;
@@ -23,10 +23,16 @@ namespace BinComp
 
 			var asmFilename = args[0];
 			var basePatchJson = args[1];
+			var symbolsFilename = args[2];
 			Logger.Debug($"input asm: {asmFilename}");
 			Logger.Debug($"output file: {basePatchJson}");
+			Logger.Debug($"Exported Symbols: {symbolsFilename}");
 
-			// ReSharper disable InconsistentNaming
+			Logger.Debug($"Cleaning up for a fresh build attempt.");
+			File.Delete(basePatchJson);
+			File.Delete(symbolsFilename);
+
+				// ReSharper disable InconsistentNaming
 			// ReSharper disable JoinDeclarationAndInitializer
 			byte[] patch_0x00;
 			byte[] patch_0xFF;
@@ -39,7 +45,7 @@ namespace BinComp
 			Logger.Debug($"temp file (zeros): {tempFile_0x00}");
 			Logger.Debug($"temp file (0xFF): {tempFile_0xFF}");
 
-			RunAsar(asmFilename, tempFile_0x00);
+			RunAsar(asmFilename, tempFile_0x00, symbolsFilename);
 
 			Logger.Debug("Reading all 0x00 file.");
 			FileStream fileStream = new FileStream(tempFile_0x00, FileMode.Open, FileAccess.Read);
@@ -57,7 +63,7 @@ namespace BinComp
 			fileStream.Close();
 			Logger.Debug("Generated all 0xFF file.");
 
-			RunAsar(asmFilename, tempFile_0xFF);
+			RunAsar(asmFilename, tempFile_0xFF, symbolsFilename);
 
 			Logger.Debug("Reading all 0xFF patched file.");
 			fileStream = new FileStream(tempFile_0xFF, FileMode.Open, FileAccess.Read);
@@ -109,16 +115,16 @@ namespace BinComp
 
 		private static void PrintUsage()
 		{
-			Console.WriteLine("bincomp.exe [input.asm] [output.json]");
+			Console.WriteLine("bincomp.exe [input.asm] [output.json] [symbols.txt]");
 		}
 
-		private static void RunAsar(string asmFilename, string romFilename)
+		private static void RunAsar(string asmFilename, string romFilename, string symbolsFilename)
 		{
-			Logger.Debug($"---- Running asar {asmFilename} {romFilename} ----");
+			Logger.Debug($"---- Running asar --no-title-check --fix-checksum=off --symbols=wla --symbols-path={symbolsFilename} {asmFilename} {romFilename} ----");
 			using (Process process = new Process())
 			{
 				process.StartInfo.FileName = "asar.exe";
-				process.StartInfo.Arguments = $"--no-title-check --fix-checksum=off --symbols=wla --symbols-path=exported_symbols.txt {asmFilename} {romFilename}";
+				process.StartInfo.Arguments = $"--no-title-check --fix-checksum=off --symbols=wla --symbols-path={symbolsFilename} {asmFilename} {romFilename}";
 				process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 				process.StartInfo.RedirectStandardError = true;
 				process.StartInfo.RedirectStandardOutput = true;

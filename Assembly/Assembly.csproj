@@ -54,8 +54,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>cd $(ProjectDir)
-
-"..\bincomp\bin\Debug\bincomp.exe" main.asm patchData.json
+"..\bincomp\$(OutDir)bincomp.exe" main.asm patchData.json exported_symbols.txt
 copy patchData.json $(SolutionDir)
 copy patchData.json $(SolutionDir)EnemizerGui\
 copy patchData.json $(SolutionDir)EnemizerGui\$(OutDir)
