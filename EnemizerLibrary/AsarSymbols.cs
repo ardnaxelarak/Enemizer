@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace EnemizerLibrary
 {
-    public class XkasSymbols
+    public class AsarSymbols
     {
-        public static XkasSymbols Instance { get { return Nested.instance; } }
+        public static AsarSymbols Instance => Nested.instance;
         public Dictionary<string, int> Symbols { get; private set; }
-        private XkasSymbols(string filename)
+        private AsarSymbols(string filename)
         {
             filename = Path.Combine(EnemizerBasePath.Instance.BasePath, filename);
 
@@ -21,13 +21,13 @@ namespace EnemizerLibrary
             var lines = File.ReadAllLines(filename);
             foreach(var l in lines)
             {
-                var s = l.Split(new string[] { " = $" }, StringSplitOptions.None);
+                var s = l.Split(new[] { " " }, StringSplitOptions.None);
                 if(s.Length != 2)
                 {
                     continue;
                 }
-                var symbol = s[0];
-                var snesAddress = int.Parse(s[1], System.Globalization.NumberStyles.HexNumber);
+                var symbol = s[1];
+                var snesAddress = int.Parse(s[0].Replace(":",""), System.Globalization.NumberStyles.HexNumber);
                 var pcAddress = Utilities.SnesToPCAddress(snesAddress);
                 Symbols[symbol] = pcAddress;
             }
@@ -39,7 +39,7 @@ namespace EnemizerLibrary
             {
             }
 
-            internal static readonly XkasSymbols instance = new XkasSymbols("exported_symbols.txt");
+            internal static readonly AsarSymbols instance = new AsarSymbols("exported_symbols.txt");
         }
     }
 }

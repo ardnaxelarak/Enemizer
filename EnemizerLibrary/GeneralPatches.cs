@@ -12,9 +12,9 @@ namespace EnemizerLibrary
         {
             // TODO: clean this up
             int pointerTableBase = AddressConstants.dungeonHeaderPointerTableBaseAddress; // 0x271E2
-            int headerBase = AddressConstants.dungeonHeaderBaseAddress; // XkasSymbols.Instance.Symbols["room_header_table"]
+            int headerBase = AddressConstants.dungeonHeaderBaseAddress; // AsarSymbols.Instance.Symbols["room_header_table"]
 
-            byte newRoomBank = romData[XkasSymbols.Instance.Symbols["moved_room_header_bank_value_address"]]; // AddressConstants.MovedRoomBank;
+            byte newRoomBank = romData[AsarSymbols.Instance.Symbols["moved_room_header_bank_value_address"]]; // AddressConstants.MovedRoomBank;
             romData[AddressConstants.RoomHeaderBankLocation] = newRoomBank; // change room header bank (at 0xB5E7) to bank to 0x40
 
             // copy header table

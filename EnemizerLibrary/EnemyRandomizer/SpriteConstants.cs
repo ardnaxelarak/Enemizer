@@ -21,8 +21,8 @@ namespace EnemizerLibrary
         public static readonly byte SpriteSubtypeByte0Mask = 0x60; // 0110 0000
         public static readonly byte SpriteSubtypeByte0RemoveMask = 0x9F; // 1001 1111
 
-        public static int RandomizedBushEnemyTableBaseAddress = XkasSymbols.Instance.Symbols["sprite_bush_spawn_table_overworld"];
-        public static int RandomizedPotEnemyTableBaseAddress = XkasSymbols.Instance.Symbols["sprite_bush_spawn_table_dungeons"];
+        public static int RandomizedBushEnemyTableBaseAddress = AsarSymbols.Instance.Symbols["sprite_bush_spawn_table_overworld"];
+        public static int RandomizedPotEnemyTableBaseAddress = AsarSymbols.Instance.Symbols["sprite_bush_spawn_table_dungeons"];
 
         public static string GetSpriteName(int spriteId)
         {

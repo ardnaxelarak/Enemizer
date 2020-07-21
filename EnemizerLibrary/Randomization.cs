@@ -208,9 +208,9 @@ namespace EnemizerLibrary
             {
                 for (int i = 0; i < 22; ++i)
                 {
-                    if (this.ROM_DATA[XkasSymbols.Instance.Symbols["sprite_bush_spawn_item_table"]+i] == 0xE1)
+                    if (this.ROM_DATA[AsarSymbols.Instance.Symbols["sprite_bush_spawn_item_table"]+i] == 0xE1)
                     {
-                        this.ROM_DATA[XkasSymbols.Instance.Symbols["sprite_bush_spawn_item_table"] + i] = 0xDA; // update our table to match
+                        this.ROM_DATA[AsarSymbols.Instance.Symbols["sprite_bush_spawn_item_table"] + i] = 0xDA; // update our table to match
                     }
                 }
             }
@@ -351,7 +351,7 @@ namespace EnemizerLibrary
 
         private void SetKillableThief(RomData romData)
         {
-            romData[XkasSymbols.Instance.Symbols["notItemSprite_Mimic"] + 4] = SpriteConstants.ThiefSprite;
+            romData[AsarSymbols.Instance.Symbols["notItemSprite_Mimic"] + 4] = SpriteConstants.ThiefSprite;
 
             if (ROM_DATA[0x6B173 + SpriteConstants.ThiefSprite] != 0xFF)
             {
@@ -445,7 +445,7 @@ namespace EnemizerLibrary
             swordType = Path.Combine(EnemizerBasePath.Instance.BasePath, swordType);
 
             FileStream f = new FileStream(swordType, FileMode.Open, FileAccess.Read);
-            rom.ReadFileStreamIntoRom(f, XkasSymbols.Instance.Symbols["swordgfx"], (int)f.Length);
+            rom.ReadFileStreamIntoRom(f, AsarSymbols.Instance.Symbols["swordgfx"], (int)f.Length);
             f.Close();
         }
 
@@ -454,7 +454,7 @@ namespace EnemizerLibrary
             shieldType = Path.Combine(EnemizerBasePath.Instance.BasePath, shieldType);
 
             FileStream f = new FileStream(shieldType, FileMode.Open, FileAccess.Read);
-            rom.ReadFileStreamIntoRom(f, XkasSymbols.Instance.Symbols["shieldgfx"], (int)f.Length);
+            rom.ReadFileStreamIntoRom(f, AsarSymbols.Instance.Symbols["shieldgfx"], (int)f.Length);
             f.Close();
         }
 

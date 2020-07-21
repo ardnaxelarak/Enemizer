@@ -219,7 +219,7 @@ namespace EnemizerTests
         [Fact]
         public void xkas_exports_should_load()
         {
-            var xkas = XkasSymbols.Instance.Symbols;
+            var xkas = AsarSymbols.Instance.Symbols;
 
             foreach(var x in xkas)
             {

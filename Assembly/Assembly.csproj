@@ -45,11 +45,16 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\bincomp\BinComp.csproj">
+      <Project>{60de5245-1818-4114-855f-822aa5fd2b6c}</Project>
+      <Name>BinComp</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>cd $(ProjectDir)
-
-"..\bincomp\bincomp.exe" main.asm patchData.json
+"..\bincomp\$(OutDir)bincomp.exe" main.asm patchData.json exported_symbols.txt
 copy patchData.json $(SolutionDir)
 copy patchData.json $(SolutionDir)EnemizerGui\
 copy patchData.json $(SolutionDir)EnemizerGui\$(OutDir)
@@ -65,8 +70,7 @@ copy exported_symbols.txt $(SolutionDir)EnemizerTests\$(OutDir)
 copy exported_symbols.txt $(SolutionDir)EnemizerCLI.Core\
 copy exported_symbols.txt $(SolutionDir)EnemizerCLI.Core\$(OutDir)
 copy exported_symbols.txt $(SolutionDir)BasePatchGenerator\
-copy exported_symbols.txt $(SolutionDir)BasePatchGenerator\$(OutDir)
-</PreBuildEvent>
+copy exported_symbols.txt $(SolutionDir)BasePatchGenerator\$(OutDir)</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>

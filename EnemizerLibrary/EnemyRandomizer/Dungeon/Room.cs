@@ -45,7 +45,7 @@ namespace EnemizerLibrary
                 byte[] snesBytes = new byte[3];
                 snesBytes[0] = romData[AddressConstants.dungeonHeaderPointerTableBaseAddress + (RoomId * 2)];
                 snesBytes[1] = romData[AddressConstants.dungeonHeaderPointerTableBaseAddress + (RoomId * 2) + 1];
-                snesBytes[2] = romData[XkasSymbols.Instance.Symbols["moved_room_header_bank_value_address"]]; // AddressConstants.MovedRoomBank;
+                snesBytes[2] = romData[AsarSymbols.Instance.Symbols["moved_room_header_bank_value_address"]]; // AddressConstants.MovedRoomBank;
 
                 int pcAddress = Utilities.SnesToPCAddress(Utilities.SnesByteArrayTo24bitSnesAddress(snesBytes));
 

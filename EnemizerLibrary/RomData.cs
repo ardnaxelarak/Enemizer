@@ -11,7 +11,7 @@ namespace EnemizerLibrary
     public class RomData
     {
         // 0x100 bytes to use for rom info
-        public int EnemizerInfoTableBaseAddress = XkasSymbols.Instance.Symbols["enemizer_info_table"];
+        public int EnemizerInfoTableBaseAddress = AsarSymbols.Instance.Symbols["enemizer_info_table"];
 
         public const int EnemizerInfoSeedOffset = 0x0;
         public const int EnemizerInfoSeedStringLength = 12;
@@ -25,7 +25,7 @@ namespace EnemizerLibrary
         public const int EnemizerInfoFlagsLength = 0x50;
 
         // 0x20 flags total
-        public int EnemizerOptionFlagsBaseAddress = XkasSymbols.Instance.Symbols["EnemizerFlags"];
+        public int EnemizerOptionFlagsBaseAddress = AsarSymbols.Instance.Symbols["EnemizerFlags"];
         public const int RandomizeHiddenEnemiesFlag = 0x00;
         public const int CloseBlindDoorFlag = 0x01;
         public const int MoldormEyesFlag = 0x02;
