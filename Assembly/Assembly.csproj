@@ -53,27 +53,25 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>cd $(ProjectDir)
-"..\bincomp\$(OutDir)bincomp.exe" main.asm patchData.json exported_symbols.txt
-copy patchData.json $(SolutionDir)
-copy patchData.json $(SolutionDir)EnemizerGui\
-copy patchData.json $(SolutionDir)EnemizerGui\$(OutDir)
-copy patchData.json $(SolutionDir)EnemizerTests\$(OutDir)
-copy patchData.json $(SolutionDir)EnemizerCLI.Core\
-copy patchData.json $(SolutionDir)EnemizerCLI.Core\$(OutDir)
-copy patchData.json $(SolutionDir)BasePatchGenerator\
-copy patchData.json $(SolutionDir)BasePatchGenerator\$(OutDir)
-copy exported_symbols.txt $(SolutionDir)
-copy exported_symbols.txt $(SolutionDir)EnemizerGui\
-copy exported_symbols.txt $(SolutionDir)EnemizerGui\$(OutDir)
-copy exported_symbols.txt $(SolutionDir)EnemizerTests\$(OutDir)
-copy exported_symbols.txt $(SolutionDir)EnemizerCLI.Core\
-copy exported_symbols.txt $(SolutionDir)EnemizerCLI.Core\$(OutDir)
-copy exported_symbols.txt $(SolutionDir)BasePatchGenerator\
-copy exported_symbols.txt $(SolutionDir)BasePatchGenerator\$(OutDir)</PreBuildEvent>
+    <PreBuildEvent>echo Cleaning up generated files
+cd $(SolutionDir)
+del /S patchData.json
+del /S exported_symbols.txt
+del /S enemizerBasePatch.json
+echo Ready to assemble
+echo .</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>cd $(ProjectDir)
+"..\bincomp\$(OutDir)bincomp.exe" main.asm patchData.json exported_symbols.txt
+copy patchData.json $(SolutionDir)BasePatchGenerator\
+copy exported_symbols.txt $(SolutionDir)BasePatchGenerator\
+copy exported_symbols.txt $(SolutionDir)EnemizerGui\
+copy exported_symbols.txt $(SolutionDir)EnemizerCLI.Core\
+copy exported_symbols.txt $(SolutionDir)EnemizerTests\</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -81,7 +79,6 @@ copy exported_symbols.txt $(SolutionDir)BasePatchGenerator\$(OutDir)</PreBuildEv
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.3.2\build\Microsoft.Net.Compilers.props'))" />
   </Target>
-
   <Target Name="BeforeClean">
     <Exec Command="Cleanup.bat" ContinueOnError="true" />
   </Target>

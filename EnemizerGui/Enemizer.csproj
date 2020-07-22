@@ -255,9 +255,6 @@
     <Content Include="enemizerBasePatch.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="patchData.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1133,9 +1130,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Assembly\Assembly.csproj">
-      <Project>{d91e0dd6-af9f-4293-a2e0-d27c508c3883}</Project>
-      <Name>Assembly</Name>
+    <ProjectReference Include="..\BasePatchGenerator\BasePatchGenerator.csproj">
+      <Project>{9a0541f2-7595-40a8-a532-4dede7f78215}</Project>
+      <Name>BasePatchGenerator</Name>
     </ProjectReference>
     <ProjectReference Include="..\EnemizerLibrary\EnemizerLibrary.csproj">
       <Project>{e6d1c409-e9de-42b9-bd0b-b6f07eac31b4}</Project>
@@ -1149,15 +1146,8 @@
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>cd $(SolutionDir)BasePatchGenerator\$(OutDir)
-$(SolutionDir)BasePatchGenerator\$(OutDir)BasePatchGenerator.exe
-copy $(SolutionDir)BasePatchGenerator\$(OutDir)enemizerBasePatch.json $(ProjectDir)
-copy $(SolutionDir)BasePatchGenerator\$(OutDir)enemizerBasePatch.json $(TargetDir)
-copy $(SolutionDir)BasePatchGenerator\$(OutDir)enemizerBasePatch.json $(SolutionDir)EnemizerCLI.Core\
-copy $(SolutionDir)BasePatchGenerator\$(OutDir)enemizerBasePatch.json $(SolutionDir)EnemizerCLI.Core\$(OutDir)
-copy $(SolutionDir)BasePatchGenerator\$(OutDir)enemizerBasePatch.json $(SolutionDir)EnemizerTests\
-copy $(SolutionDir)BasePatchGenerator\$(OutDir)enemizerBasePatch.json $(SolutionDir)EnemizerTests\$(OutDir)
-copy $(SolutionDir)\patchData.json $(TargetDir)</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
