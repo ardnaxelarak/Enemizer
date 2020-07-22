@@ -382,6 +382,6 @@ FodyWeavers.xsd
 /Setup/setup.7z
 Assembly/main.bin
 /add to release
-exported_symbols.txt
-patchData.json
-enemizerBasePatch.json
+**/exported_symbols.txt
+**/patchData.json
+**/enemizerBasePatch.json
