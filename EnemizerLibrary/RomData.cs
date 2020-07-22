@@ -398,9 +398,11 @@ namespace EnemizerLibrary
             get
             {
 #if DEBUG
+#pragma warning disable 162
                 return false;
 #endif
-                if(IsRandomizerRom == false)
+
+	            if(IsRandomizerRom == false)
                 {
                     return false;
                 }
@@ -426,6 +428,7 @@ namespace EnemizerLibrary
                 }
 
                 return false;
+#pragma warning restore 162
             }
         }
 

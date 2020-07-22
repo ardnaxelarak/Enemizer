@@ -18,7 +18,7 @@ namespace EnemizerTests
 
         [Theory]
         [ExcelData("beetorp.xls", "select * from TestData")]
-        public void should_get_to_ganon(string filename, bool expected)
+        public void should_get_to_ganon(string filename/*, bool expected*/)
         {
             //var romData = Utilities.LoadRom("rando.sfc");
             output.WriteLine(filename);
