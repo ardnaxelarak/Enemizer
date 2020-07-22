@@ -81,6 +81,10 @@ copy exported_symbols.txt $(SolutionDir)BasePatchGenerator\$(OutDir)</PreBuildEv
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.3.2\build\Microsoft.Net.Compilers.props'))" />
   </Target>
+
+  <Target Name="BeforeClean">
+    <Exec Command="Cleanup.bat" ContinueOnError="true" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
