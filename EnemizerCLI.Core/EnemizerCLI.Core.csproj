@@ -439,7 +439,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="1.9.71" />
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="Microsoft.Net.Compilers" Version="2.3.2" />
   </ItemGroup>
 

@@ -12,7 +12,7 @@ namespace EnemizerCLI
         [Option("rom", Required = true, HelpText = "path to the base rom file")]
         public string BaseRomFilename { get; set; }
 
-        [Option("seed", Required = false, DefaultValue = "", HelpText = "seed number")]
+        [Option("seed", Required = false, Default = "", HelpText = "seed number")]
         public string SeedNumber { get; set; }
 
         [Option("base", Required = false, HelpText = "path to the base2patched.json (not used in binary mode)")]
@@ -27,7 +27,7 @@ namespace EnemizerCLI
         [Option("output", Required = true, HelpText = "path to the intended output file")]
         public string OutputFilePath { get; set; }
 
-        [Option("binary", DefaultValue=false, Required = false, HelpText = "operate in binary mode (takes already randomized SFC and applies enemizer directly to ROM)")]
+        [Option("binary", Default=false, Required = false, HelpText = "operate in binary mode (takes already randomized SFC and applies enemizer directly to ROM)")]
         public bool BinaryMode { get; set; }
     }
 }

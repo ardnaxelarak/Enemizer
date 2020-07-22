@@ -13,27 +13,27 @@ namespace EnemizerCLI.Core
     {
         static void Main(string[] args)
         {
-            var options = new CommandLineOptions();
-            if (CommandLine.Parser.Default.ParseArgumentsStrict(args, options))
+	        var writer = new StringWriter();
+            var parser = new Parser(conf => conf.HelpWriter = writer);
+            var result = parser.ParseArguments<CommandLineOptions>(args);
+
+            result.WithNotParsed(error =>
             {
-                Stopwatch stopwatch = new Stopwatch();
-                if (options.BinaryMode)
-				{
-                    stopwatch.Start();
-                    MakeEnemizerRom(options);
-				}
-                else
-				{
-                    stopwatch.Start();
-                    MakeEnemizerJsonPatch(options);
-                }
-                stopwatch.Stop();
-                Console.WriteLine($"Seed generated in: {stopwatch.Elapsed}");
-            }
-            else
+				Console.WriteLine(writer.ToString());
+				Environment.Exit(1);
+            }).WithParsed(options =>
             {
-                Console.Write(GetUsage(options));
-            }
+				Stopwatch stopwatch = new Stopwatch();
+				stopwatch.Start();
+
+	            if (options.BinaryMode)
+		            MakeEnemizerRom(options);
+	            else
+		            MakeEnemizerJsonPatch(options);
+
+	            stopwatch.Stop();
+				Console.WriteLine($"Seed generated in: {stopwatch.Elapsed}");
+            });
         }
 
 		private static void MakeEnemizerRom(CommandLineOptions options)
@@ -129,13 +129,5 @@ namespace EnemizerCLI.Core
                 throw new Exception("It appears that the provided base ROM is already enemized. Please ensure you are using an original game ROM.");
             }
         }
-
-        [HelpOption]
-        public static string GetUsage(CommandLineOptions options)
-        {
-            return HelpText.AutoBuild(options,
-              (HelpText current) => HelpText.DefaultParsingErrorsHandler(options, current));
-        }
-
     }
 }
