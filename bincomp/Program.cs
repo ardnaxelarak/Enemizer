@@ -28,10 +28,8 @@ namespace BinComp
 			Console.WriteLine($"Exported Symbols: {symbolsFilename}");
 
 			Console.WriteLine($"Cleaning up for a fresh build attempt.");
-			File.Delete(basePatchJson);
-			File.Delete(symbolsFilename);
 
-				// ReSharper disable InconsistentNaming
+			// ReSharper disable InconsistentNaming
 			// ReSharper disable JoinDeclarationAndInitializer
 			byte[] patch_0x00;
 			byte[] patch_0xFF;
@@ -117,6 +115,16 @@ namespace BinComp
 			Console.WriteLine("bincomp.exe [input.asm] [output.json] [symbols.txt]");
 		}
 
+		private static void CmdReadOutput(object sender, DataReceivedEventArgs e, AutoResetEvent outputWaitHandle, StringBuilder output)
+		{
+			if (e.Data == null)
+			{
+				outputWaitHandle.Set();
+				return;
+			}
+			output.AppendLine(e.Data);
+		}
+
 		private static void RunAsar(string asmFilename, string romFilename, string symbolsFilename)
 		{
 			Console.WriteLine($"---- Running asar --no-title-check --fix-checksum=off --symbols=wla --symbols-path={symbolsFilename} {asmFilename} {romFilename} ----");
@@ -129,26 +137,27 @@ namespace BinComp
 				process.StartInfo.RedirectStandardOutput = true;
 				process.StartInfo.UseShellExecute = false;
 				StringBuilder output = new StringBuilder();
+				StringBuilder error = new StringBuilder();
 				using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
 				{
-					process.OutputDataReceived += delegate(object sender, DataReceivedEventArgs e)
+					using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
 					{
-						if (e.Data == null)
+						process.OutputDataReceived += (sender, e) => CmdReadOutput(sender, e, outputWaitHandle, output);
+						process.ErrorDataReceived += (sender, e) => CmdReadOutput(sender, e, errorWaitHandle, error);
+
+						process.Start();
+						process.BeginOutputReadLine();
+						process.BeginErrorReadLine();
+						process.WaitForExit();
+						outputWaitHandle.WaitOne();
+						errorWaitHandle.WaitOne();
+						Console.WriteLine(output.ToString());
+						Console.WriteLine(error.ToString());
+						if (process.ExitCode != 0)
 						{
-							outputWaitHandle.Set();
-							return;
+							Console.WriteLine("asar threw errors");
+							throw new Exception("asar threw errors");
 						}
-						output.AppendLine(e.Data);
-					};
-					process.Start();
-					process.BeginOutputReadLine();
-					process.WaitForExit();
-					outputWaitHandle.WaitOne();
-					Console.WriteLine(output.ToString());
-					if (process.ExitCode != 0)
-					{
-						Console.WriteLine("asar threw errors");
-						throw new Exception("asar threw errors");
 					}
 				}
 			}
