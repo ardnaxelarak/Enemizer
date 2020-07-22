@@ -13,32 +13,35 @@ namespace EnemizerCLI.Core
     {
         static void Main(string[] args)
         {
-	        var writer = new StringWriter();
+            var writer = new StringWriter();
             var parser = new Parser(conf => conf.HelpWriter = writer);
             var result = parser.ParseArguments<CommandLineOptions>(args);
 
             result.WithNotParsed(error =>
             {
-				Console.WriteLine(writer.ToString());
-				Environment.Exit(1);
+                Console.WriteLine(writer.ToString());
+                Environment.Exit(1);
             }).WithParsed(options =>
             {
-				Stopwatch stopwatch = new Stopwatch();
-				stopwatch.Start();
+                Stopwatch stopwatch = Stopwatch.StartNew();
 
-	            if (options.BinaryMode)
-		            MakeEnemizerRom(options);
-	            else
-		            MakeEnemizerJsonPatch(options);
+                if (options.BinaryMode)
+                {
+                    MakeEnemizerRom(options);
+                }
+                else
+                {
+                    MakeEnemizerJsonPatch(options);
+                }
 
-	            stopwatch.Stop();
-				Console.WriteLine($"Seed generated in: {stopwatch.Elapsed}");
+                stopwatch.Stop();
+                Console.WriteLine($"Seed generated in: {stopwatch.Elapsed}");
             });
         }
 
-		private static void MakeEnemizerRom(CommandLineOptions options)
-		{
-			var optionFlags = JsonConvert.DeserializeObject<OptionFlags>(File.ReadAllText(options.EnemizerOptionsJsonFilename));
+        private static void MakeEnemizerRom(CommandLineOptions options)
+        {
+            var optionFlags = JsonConvert.DeserializeObject<OptionFlags>(File.ReadAllText(options.EnemizerOptionsJsonFilename));
 
             byte[] rawData = File.ReadAllBytes(options.BaseRomFilename);
             Array.Resize(ref rawData, 2 * 1024 * 1024);
@@ -46,14 +49,14 @@ namespace EnemizerCLI.Core
             RomData romData = new RomData(rawData);
             ThrowIfAlreadyEnemized(romData);
 
-			int seed = GetSeed(options);
-			byte[] enemPatch = GenerateRom(seed, rawData, optionFlags);
+            int seed = GetSeed(options);
+            byte[] enemPatch = GenerateRom(seed, rawData, optionFlags);
 
-			File.WriteAllBytes(options.OutputFilePath, enemPatch);
-			Console.WriteLine($"Generated SFC file {options.OutputFilePath}");
-		}
+            File.WriteAllBytes(options.OutputFilePath, enemPatch);
+            Console.WriteLine($"Generated SFC file {options.OutputFilePath}");
+        }
 
-		static void MakeEnemizerJsonPatch(CommandLineOptions options)
+        static void MakeEnemizerJsonPatch(CommandLineOptions options)
         {
             var basePatchJson = File.ReadAllText(options.BasePatchJsonFilename);
             var randoPatchJson = File.ReadAllText(options.RandomizerPatchJsonFilename);
@@ -81,26 +84,26 @@ namespace EnemizerCLI.Core
         }
 
         static byte[] GenerateRom(int seed, byte[] rom_data, OptionFlags optionFlags)
-		{
-			RomData randomizedRom = RandomizeRom(seed, rom_data, optionFlags);
+        {
+            RomData randomizedRom = RandomizeRom(seed, rom_data, optionFlags);
 
-			var romfs = new MemoryStream();
-			randomizedRom.WriteRom(romfs);
-			romfs.Flush();
+            var romfs = new MemoryStream();
+            randomizedRom.WriteRom(romfs);
+            romfs.Flush();
 
-			var romBytes = romfs.ToArray();
-			return romBytes;
-		}
+            var romBytes = romfs.ToArray();
+            return romBytes;
+        }
 
-		private static RomData RandomizeRom(int seed, byte[] rom_data, OptionFlags optionFlags)
-		{
-			RomData romData = new RomData(rom_data);
-			Randomization randomize = new Randomization();
-			RomData randomizedRom = randomize.MakeRandomization("", seed, optionFlags, romData, "");
-			return randomizedRom;
-		}
+        private static RomData RandomizeRom(int seed, byte[] rom_data, OptionFlags optionFlags)
+        {
+            RomData romData = new RomData(rom_data);
+            Randomization randomize = new Randomization();
+            RomData randomizedRom = randomize.MakeRandomization("", seed, optionFlags, romData, "");
+            return randomizedRom;
+        }
 
-		private static int GetSeed(CommandLineOptions options)
+        private static int GetSeed(CommandLineOptions options)
         {
             Random rand = new Random();
             if (string.IsNullOrEmpty(options.SeedNumber))
