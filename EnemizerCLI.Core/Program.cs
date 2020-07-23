@@ -1,5 +1,4 @@
 ﻿using CommandLine;
-using CommandLine.Text;
 using EnemizerLibrary;
 using Newtonsoft.Json;
 using System;

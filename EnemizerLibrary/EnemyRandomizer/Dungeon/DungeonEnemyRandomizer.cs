@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EnemizerLibrary
 {
@@ -49,14 +45,14 @@ namespace EnemizerLibrary
             foreach (var room in roomCollection.Rooms)
             {
                 if (RoomIdConstants.DontRandomizeRooms.Contains(room.RoomId))
-				{
+                {
                     continue;
-				}
+                }
 
                 if (optionFlags.EasyModeEscape && RoomIdConstants.NoSpecialEnemiesRoomsInStandardMode.Contains(room.RoomId))
-				{
+                {
                     continue;
-				}
+                }
 
                 room.RandomizeSprites(rand, optionFlags, spriteGroupCollection, spriteRequirementCollection);
 

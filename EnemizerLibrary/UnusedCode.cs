@@ -1,10 +1,5 @@
 ﻿//UNUSED CODE FOR SPRITES PALETTE RANDOMIZATION RESULT IS BAD NEED TO REWRITE THAT
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+
 using System.Drawing;
 //using System.Windows.Forms;
 

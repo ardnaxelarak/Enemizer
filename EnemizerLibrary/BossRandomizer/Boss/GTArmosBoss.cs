@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EnemizerLibrary
+﻿namespace EnemizerLibrary
 {
     // this should only be used for resetting a rom back to vanilla
     public class GTArmosBoss : Boss

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace EnemizerLibrary
+﻿namespace EnemizerLibrary
 {
     /*
     public class GroupSubsetPossibleSpriteCollection
