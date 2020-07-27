@@ -61,7 +61,6 @@
     <None Remove="bosses_gfx\Vitreous\thinktreous.zip" />
     <None Remove="enemizerBasePatch.json" />
     <None Remove="exported_symbols.txt" />
-    <None Remove="patchData.json" />
     <None Remove="shield_gfx\fighter only.gfx" />
     <None Remove="shield_gfx\guard shield.gfx" />
     <None Remove="shield_gfx\medallion.gfx" />
@@ -281,9 +280,6 @@
     <Content Include="exported_symbols.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="patchData.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="shield_gfx\fighter only.gfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -443,7 +439,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="1.9.71" />
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="Microsoft.Net.Compilers" Version="2.3.2" />
   </ItemGroup>
 

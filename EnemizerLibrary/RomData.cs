@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace EnemizerLibrary
 {
@@ -304,7 +303,7 @@ namespace EnemizerLibrary
                     (0x56, 0x54), // item randomizer: VT
                     (0x45, 0x52), // entrance randomizer: ER
                     (0x42, 0x4D), // berserker's multiworld: BM
-		    (0x42, 0x44), // berserker's multiworld doors: BD
+            (0x42, 0x44), // berserker's multiworld doors: BD
                     (0x44, 0x52)  // door randomizer: DR
                 };
 
@@ -342,12 +341,12 @@ namespace EnemizerLibrary
         }
 
         public bool IsRandomizerStandardMode
-		{
+        {
             get
-			{
+            {
                 return IsRandomizerRom && romData[RandomizerModeFlag] == 0x00;
-			}
-		}
+            }
+        }
 
         public bool IsItemRandomizerRom
         {
@@ -398,8 +397,10 @@ namespace EnemizerLibrary
             get
             {
 #if DEBUG
+#pragma warning disable 162
                 return false;
 #endif
+
                 if(IsRandomizerRom == false)
                 {
                     return false;
@@ -426,6 +427,7 @@ namespace EnemizerLibrary
                 }
 
                 return false;
+#pragma warning restore 162
             }
         }
 

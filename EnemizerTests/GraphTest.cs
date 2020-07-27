@@ -1,7 +1,5 @@
 ﻿using EnemizerLibrary;
 using System;
-using System.Diagnostics;
-using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 

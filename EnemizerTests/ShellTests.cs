@@ -1,7 +1,4 @@
 ﻿using EnemizerLibrary;
-using System;
-using System.Diagnostics;
-using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -38,22 +35,22 @@ namespace EnemizerTests
         public void calculate_shell_bytes()
         {
             /*
-			Subtype 2 objects are those with an index >= 0xFC
+            Subtype 2 objects are those with an index >= 0xFC
 
-			1st, 2nd, & 3rd bytes:  Third Byte Second Byte  Byte
+            1st, 2nd, & 3rd bytes:  Third Byte Second Byte  Byte
                                     ffdd dddd  eeee cccc   aaaa aabb
-			
-			The a bits are unused, but after all they are the marker for this type of object
+            
+            The a bits are unused, but after all they are the marker for this type of object
             subtype.
             
-			The b, c, e, and f bits are transformed into a VRAM tilemap address:
-			
-			000c cccf fbbe eee0
+            The b, c, e, and f bits are transformed into a VRAM tilemap address:
+            
+            000c cccf fbbe eee0
             
             Might I add this is one messed up format?
 
-			The d bits are used as an index into the table at $8470. Since such indicies
-			are going to be even, the d bits are transformed into: 0000 0000 0ddd ddd0
+            The d bits are used as an index into the table at $8470. Since such indicies
+            are going to be even, the d bits are transformed into: 0000 0000 0ddd ddd0
              */
             //byte[] bytes = { 0x2E, 0x98, 0xFF };
             //var f = (bytes[2] & 0xC0) >> 6;

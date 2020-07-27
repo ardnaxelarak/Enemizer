@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace EnemizerLibrary
@@ -42,14 +41,14 @@ namespace EnemizerLibrary
             foreach (var r in Rooms)
             {
                 if (RoomIdConstants.DontRandomizeRooms.Contains(r.RoomId))
-				{
+                {
                     continue;
-				}
+                }
 
                 if (optionFlags.EasyModeEscape && RoomIdConstants.NoSpecialEnemiesRoomsInStandardMode.Contains(r.RoomId))
-				{
+                {
                     continue;
-				}
+                }
 
                 List<SpriteRequirement> doNotUpdateSprites = spriteRequirementCollection
                                                             .DoNotRandomizeSprites
