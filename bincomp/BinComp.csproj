@@ -36,9 +36,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\bincomp\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\..\bincomp\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
