@@ -296,7 +296,7 @@ namespace EnemizerLibrary
 
             roomObjects.WriteChangesToRom(AddressConstants.movedRoomObjectBaseAddress);
             //shells.WriteShellsToRom(romData);
-            RemoveBlindSpawnCode(romData);
+            //RemoveBlindSpawnCode(romData);
             RemoveMaidenFromThievesTown(romData);
         }
 

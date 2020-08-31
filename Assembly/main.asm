@@ -65,6 +65,7 @@ incsrc overworld_sprites.asm
 incsrc bees.asm
 incsrc vitreous_fixes.asm
 incsrc agahnim.asm
+incsrc blindboss.asm
 
 ; data
 incsrc room_object_table.asm
