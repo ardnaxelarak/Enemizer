@@ -42,3 +42,5 @@ incsrc bee_hooks.asm
 incsrc vitreous_hooks.asm
 
 incsrc agahnim_hooks.asm
+
+incsrc blindboss_hooks.asm
