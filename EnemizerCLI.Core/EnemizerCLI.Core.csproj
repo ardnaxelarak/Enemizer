@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -448,6 +448,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="EnemizerVersion.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="sprites\001.link.1.zspr">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
