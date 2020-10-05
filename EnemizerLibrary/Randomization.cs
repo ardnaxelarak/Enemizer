@@ -96,8 +96,6 @@ namespace EnemizerLibrary
             // -----bosses---------------------
             if (optionFlags.RandomizeBosses)
             {
-                Graph graph = optionflags.UseManualBosses ? null : new Graph(new GraphData(this.ROM_DATA, this.optionFlags));
-
                 this.ROM_DATA.CloseBlindDoor = true;
 
                 BossRandomizer br;
