@@ -179,8 +179,12 @@ namespace EnemizerLibrary
 
         public RomData(byte[] romData)
         {
-            this.romData = romData;
-            this.OriginalLength = romData.Length;
+            //Strip header if necessary.
+            this.romData = romData.Length % 1024 == 512 
+                ? romData.Skip(512).ToArray() 
+                : romData;
+
+            this.OriginalLength = this.romData.Length;
         }
 
         /// <summary>
