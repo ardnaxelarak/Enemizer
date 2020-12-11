@@ -26,14 +26,6 @@ namespace EnemizerLibrary
             this.optionFlags = optionflags;
 
             this.ROM_DATA = romData;
-            if (this.ROM_DATA.IsEnemizerRom)
-            {
-                seed = ResetEnemizerRom();
-            }
-            this.ROM_DATA.ExpandRom();
-            // this.ROM_DATA.SetCharacterSelectScreenVersion();
-            this.ROM_DATA.EnemizerSeed = seed;
-            this.ROM_DATA.SetRomInfoOptionFlags(this.optionFlags);
 
             // make sure we have a randomizer rom
             if (this.ROM_DATA.IsRandomizerRom == false)
@@ -46,6 +38,15 @@ namespace EnemizerLibrary
             {
                 throw new Exception("Enemizer does not support race roms.");
             }
+
+            if (this.ROM_DATA.IsEnemizerRom)
+            {
+                seed = ResetEnemizerRom();
+            }
+            this.ROM_DATA.ExpandRom();
+            // this.ROM_DATA.SetCharacterSelectScreenVersion();
+            this.ROM_DATA.EnemizerSeed = seed;
+            this.ROM_DATA.SetRomInfoOptionFlags(this.optionFlags);
 
             // patch in our assembly binary data
             // TODO: figure out if this should be done first or after some other code below
