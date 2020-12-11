@@ -616,6 +616,7 @@ namespace EnemizerLibrary
             R295_HammerPegCave = 295;
 
         //All the rooms that need every sprite dead for doors to open
+        //as well as any other BS that might cause problems with completing the room.
         public static readonly int[] NeedKillable_doors =
         {
             R184_EasternPalace_BigKeyRoom, // for the anti-fairy circle
@@ -624,11 +625,13 @@ namespace EnemizerLibrary
             R27_PalaceofDarkness_Mimics_MovingWallRoom,
             R75_PalaceofDarkness_Warps_SouthMimicsRoom,
 
+            R4_TurtleRock_CrystalRollerRoom, //Greed room has a Kill-all part.
             R36_TurtleRock_DoubleHokku_Bokku_BigchestRoom,
             R182_TurtleRock_ChainChompsRoom,
 
             R40_SwampPalace_EntranceRoom,
 
+            R14_IcePalace_EntranceRoom, //Not normally required to backtrack, except in doors intensity 3.
             R46_IcePalace_CompassRoom,
             R62_IcePalace_StalfosKnights_ConveyorHellway,
             R110_IcePalace_PengatorsRoom,
@@ -643,12 +646,14 @@ namespace EnemizerLibrary
             R117_DesertPalace_BigKeyChestRoom,
             R133_DesertPalace_EastEntranceRoom,
 
+            R61_GanonsTower_TorchRoom2,
             R93_GanonsTower_Gauntlet1_2_3,
             R107_GanonsTower_MimicsRooms,
             R109_GanonsTower_Gauntlet4_5,
             R123_GanonsTower,
             R125_GanonsTower_Winder_WarpMazeRoom,
             R141_GanonsTower_Tile_TorchPuzzleRoom,
+            R150_GanonsTower_Torches1Room,
             R165_GanonsTower_WizzrobesRooms,
 
             R113_HyruleCastle_BoomerangChestRoom,
@@ -657,6 +662,7 @@ namespace EnemizerLibrary
             R216_EasternPalace_PreArmosKnightsRoom,
 
             R176_AgahnimsTower_CircleofPots,
+            R192_AgahnimsTower_DarkBridgeRoom,  //Not normally required to go backwards, except in basic/crossed doors, or doing glitch shenanigans.
             R224_AgahnimsTower_EntranceRoom,
 
             R178_MiseryMire_SlugRoom,
