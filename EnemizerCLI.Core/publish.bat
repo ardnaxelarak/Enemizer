@@ -3,7 +3,7 @@ setlocal
   PATH="C:\Program Files\7-Zip";%PATH%
   set MSBUILDSINGLELOADCONTEXT=1
   
-  set FRAMEWORK=netcoreapp3.1
+  set FRAMEWORK=net6.0
   set RELEASEBUILD=Release
   
   set WINDOWSVERSION=win-x64
