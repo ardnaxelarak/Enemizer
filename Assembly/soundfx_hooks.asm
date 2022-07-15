@@ -53,7 +53,4 @@ db $09, $00, $E1, $3E
 ; Byte 7: GAIN
 ; Byte 8: Tuning
 db $7F, $7F, $00, $00, $19, $FF, $F0, $70, $04
-; what.brr ; 774bytes -> ARAM $3188
-db $74, $07, $88, $31
-incbin what4.brr
 db $00, $00, $00, $08
