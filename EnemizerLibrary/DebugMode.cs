@@ -311,6 +311,7 @@ namespace EnemizerLibrary
             SpriteConstants.DesertPalaceBarriersSprite,
             SpriteConstants.BirdSprite,
             SpriteConstants.SquirrelSprite,
+            SpriteConstants.MoldormSprite,
             SpriteConstants.MasterSwordSprite,
             SpriteConstants.ShootingGalleryProprietorSprite,
             SpriteConstants.MovingCannonBallShooters_RightSprite,
