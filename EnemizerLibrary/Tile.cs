@@ -15,12 +15,7 @@ namespace EnemizerLibrary
 
         public override bool Equals(object obj)
         {
-            var t = obj as Tile;
-
-            if(Object.ReferenceEquals(null, t))
-            {
-                return false;
-            }
+            if (obj is not Tile t) return false;
 
             return this.x == t.x && this.y == t.y;
         }
@@ -32,7 +27,7 @@ namespace EnemizerLibrary
                 const int HashingBase = (int)2166136261;
                 const int HashingMultiplier = 16777619;
 
-                int hash = HashingBase;
+                var hash = HashingBase;
                 hash = (hash * HashingMultiplier) ^ x.GetHashCode();
                 hash = (hash * HashingMultiplier) ^ y.GetHashCode();
                 return hash;
@@ -41,11 +36,11 @@ namespace EnemizerLibrary
 
         public static bool operator ==(Tile t1, Tile t2)
         {
-            if(Object.ReferenceEquals(null, t1) || Object.ReferenceEquals(null, t2))
+            if (t1 is null || t2 is null)
             {
                 return false;
             }
-            if(Object.ReferenceEquals(t1, t2))
+            if (Object.ReferenceEquals(t1, t2))
             {
                 return true;
             }
@@ -71,7 +66,7 @@ namespace EnemizerLibrary
 
             romData[0x04BA1D] = (byte)this.Items.Count;
 
-            for (int i = 0; i < this.Items.Count; i++)
+            for (var i = 0; i < this.Items.Count; i++)
             {
                 // x
                 romData[0x4BA2A + i] = (byte)((this.Items[i].x + 3) * 16);

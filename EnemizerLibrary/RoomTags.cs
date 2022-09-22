@@ -4,8 +4,7 @@ namespace EnemizerLibrary
 {
     public class RoomTags
     {
-        public static Dictionary<int, string> Tags = new Dictionary<int, string>()
-        {
+        public static Dictionary<int, string> Tags = new() {
             { 0, "Nothing" },
             { 1, "NW Kill enemy to open" },
             { 2, "NE Kill enemy to open" },

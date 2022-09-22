@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-//using System.Web.Hosting;
 
 namespace EnemizerLibrary
 {
@@ -22,7 +21,7 @@ namespace EnemizerLibrary
 
         public void PatchRom(RomData rom)
         {
-            foreach(var patch in Patches)
+            foreach (var patch in Patches)
             {
                 rom.PatchData(patch);
             }
@@ -46,12 +45,7 @@ namespace EnemizerLibrary
 
     public class PatchObject
     {
-        public int address { get; set; }
-        public List<byte> patchData { get; set; }
-
-        public PatchObject()
-        {
-            patchData = new List<byte>();
-        }
+        public int Address { get; set; }
+        public List<byte> PatchData { get; set; } = new();
     }
 }

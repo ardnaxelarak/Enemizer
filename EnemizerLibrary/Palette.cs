@@ -29,11 +29,11 @@ namespace EnemizerLibrary
 
         public Palette(int size = 16)
         {
-            this.palette = new Color[size];
+            this.PaletteColor = new Color[size];
 
-            for(int i=0; i<this.palette.Length; i++)
+            for (var i = 0; i < this.PaletteColor.Length; i++)
             {
-                this.palette[i] = Color.FromArgb(i * 15, i * 15, i * 15);
+                this.PaletteColor[i] = Color.FromArgb(i * 15, i * 15, i * 15);
             }
         }
 
@@ -42,40 +42,37 @@ namespace EnemizerLibrary
         // This method is called by the Set accessor of each property.
         // The CallerMemberName attribute that is applied to the optional propertyName
         // parameter causes the property name of the caller to be substituted as an argument.
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        Color[] palette { get; set; }
-        byte[] rawPalette { get; set; }
+        Color[] PaletteColor { get; set; }
+        byte[] RawPalette { get; set; }
 
-        public Color[] PaletteColors { get { return palette; } }
+        public Color[] PaletteColors { get => PaletteColor; }
 
         public Color this[int i]
         {
             get
             {
-                if (this.palette.Length < i)
+                if (this.PaletteColor.Length < i)
                 {
                     throw new IndexOutOfRangeException("Invalid palette index");
                 }
 
-                return this.palette[i];
+                return this.PaletteColor[i];
             }
             set
             {
-                if(this.palette.Length < i)
+                if (this.PaletteColor.Length < i)
                 {
                     throw new IndexOutOfRangeException("Invalid palette index");
                 }
 
-                if (value != this.palette[i])
+                if (value != this.PaletteColor[i])
                 {
-                    this.palette[i] = value;
+                    this.PaletteColor[i] = value;
 
                     this.UpdateRawFromPalette();
 
@@ -86,50 +83,50 @@ namespace EnemizerLibrary
 
         public int Length
         {
-            get { return this.palette.Length; }
+            get => this.PaletteColor.Length;
         }
 
         public byte[] GetRawPalette()
         {
-            return this.rawPalette;
+            return this.RawPalette;
         }
 
         public void SetRawPalette(byte[] rawpalette)
         {
-            this.rawPalette = new byte[rawpalette.Length];
-            Array.Copy(rawpalette, this.rawPalette, rawpalette.Length);
+            this.RawPalette = new byte[rawpalette.Length];
+            Array.Copy(rawpalette, this.RawPalette, rawpalette.Length);
 
             UpdatePaletteFromRaw();
         }
 
         void UpdatePaletteFromRaw()
         {
-            int startIndex = 0;
-            int length = rawPalette.Length == 30 ? 16 : rawPalette.Length / 2;
-            this.palette = new Color[length];
+            var startIndex = 0;
+            var length = RawPalette.Length == 30 ? 16 : RawPalette.Length / 2;
+            this.PaletteColor = new Color[length];
 
-            if(rawPalette.Length == 30)
+            if (RawPalette.Length == 30)
             {
-                this.palette[0] = Color.FromArgb(0, 0, 0);
+                this.PaletteColor[0] = Color.FromArgb(0, 0, 0);
                 startIndex = 1;
             }
 
-            for (int i = startIndex; i < this.palette.Length; i++)
+            for (var i = startIndex; i < this.PaletteColor.Length; i++)
             {
-                this.palette[i] = SpriteUtilities.GetColorFromBytes(this.rawPalette[(i - startIndex) * 2], this.rawPalette[(i - startIndex) * 2 + 1]);
+                this.PaletteColor[i] = SpriteUtilities.GetColorFromBytes(this.RawPalette[(i - startIndex) * 2], this.RawPalette[(i - startIndex) * 2 + 1]);
             }
         }
 
         void UpdateRawFromPalette()
         {
-            this.rawPalette = new byte[this.palette.Length * 2];
+            this.RawPalette = new byte[this.PaletteColor.Length * 2];
 
-            for(int i = 0; i < this.palette.Length; i++)
+            for (var i = 0; i < this.PaletteColor.Length; i++)
             {
-                var rawBytes = SpriteUtilities.GetBytesFromColor(this.palette[i]);
+                var rawBytes = SpriteUtilities.GetBytesFromColor(this.PaletteColor[i]);
 
-                this.rawPalette[i * 2] = rawBytes[0];
-                this.rawPalette[i * 2 + 1] = rawBytes[1];
+                this.RawPalette[i * 2] = rawBytes[0];
+                this.RawPalette[i * 2 + 1] = rawBytes[1];
             }
         }
     }

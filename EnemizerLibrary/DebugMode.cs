@@ -5,8 +5,8 @@ namespace EnemizerLibrary
 {
     public class DebugMode
     {
-        RomData romData;
-        OptionFlags optionFlags;
+        readonly RomData romData;
+        readonly OptionFlags optionFlags;
 
         public DebugMode(RomData romData, OptionFlags optionFlags)
         {
@@ -28,13 +28,13 @@ namespace EnemizerLibrary
             {
                 // this is set in the boss randomizer because there is too much to do after picking a boss
             }
-            if(optionFlags.DebugForceEnemy)
+            if (optionFlags.DebugForceEnemy)
             {
                 SetDungeonEnemy(rc);
                 SetOverworldEnemy(owa);
                 SetSpriteGroups(sg, sr);
             }
-            if(optionFlags.DebugOpenShutterDoors)
+            if (optionFlags.DebugOpenShutterDoors)
             {
                 RemoveKillRooms(rc);
             }
@@ -63,7 +63,7 @@ namespace EnemizerLibrary
             var dg = sg.SpriteGroups.FirstOrDefault(x => x.GroupId == 68);
             if (req != null)
             {
-                if(req.SubGroup0.Count > 0)
+                if (req.SubGroup0.Count > 0)
                 {
                     owg.SubGroup0 = req.SubGroup0.FirstOrDefault();
                     dg.SubGroup0 = req.SubGroup0.FirstOrDefault();
@@ -93,11 +93,11 @@ namespace EnemizerLibrary
 
         void SetDungeonEnemy(RoomCollection rc)
         {
-            foreach(var r in rc.Rooms)
+            foreach (var r in rc.Rooms)
             {
-                foreach(var s in r.Sprites)
+                foreach (var s in r.Sprites)
                 {
-                    if(false == dontModifySprites.Contains(s.SpriteId))
+                    if (!dontModifySprites.Contains(s.SpriteId))
                     {
                         s.SpriteId = optionFlags.DebugForceEnemyId;
                         r.GraphicsBlockId = 4;
@@ -108,11 +108,11 @@ namespace EnemizerLibrary
 
         void SetOverworldEnemy(OverworldAreaCollection owa)
         {
-            foreach(var o in owa.OverworldAreas)
+            foreach (var o in owa.OverworldAreas)
             {
-                foreach(var s in o.Sprites)
+                foreach (var s in o.Sprites)
                 {
-                    if(false == dontModifySprites.Contains(s.SpriteId))
+                    if (!dontModifySprites.Contains(s.SpriteId))
                     {
                         s.SpriteId = optionFlags.DebugForceEnemyId;
                         o.GraphicsBlockId = 7;
@@ -124,10 +124,10 @@ namespace EnemizerLibrary
 
         void RemoveKillRooms(RoomCollection rc)
         {
-            if(optionFlags.DebugOpenShutterDoors)
+            if (optionFlags.DebugOpenShutterDoors)
             {
                 var doc = new DungeonObjectDataPointerCollection(romData);
-                foreach(var r in doc.RoomDungeonObjectDataPointers.Values.Where(x => shutterDoorRooms.Contains(x.RoomId)).ToList())
+                foreach (var r in doc.RoomDungeonObjectDataPointers.Values.Where(x => shutterDoorRooms.Contains(x.RoomId)).ToList())
                 {
                     r.MakeShutterDoorsNormal();
                 }
@@ -149,28 +149,28 @@ namespace EnemizerLibrary
             }
         }
 
-        public int[] shutterDoorRooms = 
+        public int[] shutterDoorRooms =
         {
             RoomIdConstants.R2_HyruleCastle_SwitchRoom,
             RoomIdConstants.R4_TurtleRock_CrystalRollerRoom,
-            //RoomIdConstants.R6_SwampPalace_Arrghus,
-            //RoomIdConstants.R8_Cave_HealingFairy,
+            // RoomIdConstants.R6_SwampPalace_Arrghus,
+            // RoomIdConstants.R8_Cave_HealingFairy,
             RoomIdConstants.R11_PalaceofDarkness_TurtleRoom,
-            //RoomIdConstants.R13_GanonsTower_Agahnim2,
+            // RoomIdConstants.R13_GanonsTower_Agahnim2,
             RoomIdConstants.R14_IcePalace_EntranceRoom,
             RoomIdConstants.R21_TurtleRock0x15,
             RoomIdConstants.R27_PalaceofDarkness_Mimics_MovingWallRoom,
             RoomIdConstants.R28_GanonsTower_IceArmos,
             RoomIdConstants.R30_IcePalace_BombFloor_BariRoom,
             RoomIdConstants.R31_IcePalace_Pengator_BigKeyRoom,
-            //RoomIdConstants.R32_AgahnimsTower_Agahnim,
+            // RoomIdConstants.R32_AgahnimsTower_Agahnim,
             RoomIdConstants.R36_TurtleRock_DoubleHokku_Bokku_BigchestRoom,
             RoomIdConstants.R38_SwampPalace_StatueRoom,
             RoomIdConstants.R42_PalaceofDarkness_BigHubRoom,
             RoomIdConstants.R43_PalaceofDarkness_MapChest_FairyRoom,
             RoomIdConstants.R48_AgahnimsTower_MaidenSacrificeChamber,
             RoomIdConstants.R49_TowerofHera_HardhatBeetlesRoom,
-            //RoomIdConstants.R51_DesertPalace_Lanmolas,
+            // RoomIdConstants.R51_DesertPalace_Lanmolas,
             RoomIdConstants.R57_SkullWoods_GibdoKey_MothulaHoleRoom,
             RoomIdConstants.R61_GanonsTower_TorchRoom2,
             RoomIdConstants.R62_IcePalace_StalfosKnights_ConveyorHellway,
@@ -216,7 +216,7 @@ namespace EnemizerLibrary
             RoomIdConstants.R168_EasternPalace_StalfosSpawnRoom,
             RoomIdConstants.R169_EasternPalace_BigChestRoom,
             RoomIdConstants.R170_EasternPalace_MapChestRoom,
-            //RoomIdConstants.R172_ThievesTown_BlindTheThief,
+            // RoomIdConstants.R172_ThievesTown_BlindTheThief,
             RoomIdConstants.R176_AgahnimsTower_CircleofPots,
             RoomIdConstants.R178_MiseryMire_SlugRoom,
             RoomIdConstants.R181_TurtleRock_DarkMaze,
@@ -228,7 +228,7 @@ namespace EnemizerLibrary
             RoomIdConstants.R193_MiseryMire_CompassChest_TileRoom,
             RoomIdConstants.R195_MiseryMire_BigChestRoom,
             RoomIdConstants.R199_TurtleRock_TorchPuzzle,
-            //RoomIdConstants.R200_EasternPalace_ArmosKnights,
+            // RoomIdConstants.R200_EasternPalace_ArmosKnights,
             RoomIdConstants.R201_EasternPalace_EntranceRoom,
             RoomIdConstants.R206_IcePalace_HoletoKholdstareRoom,
             RoomIdConstants.R208_AgahnimsTower_DarkMaze,
@@ -239,7 +239,7 @@ namespace EnemizerLibrary
             RoomIdConstants.R218_EasternPalace,
             RoomIdConstants.R219_ThievesTown_Main_SouthWestEntranceRoom,
             RoomIdConstants.R224_AgahnimsTower_EntranceRoom,
-            //RoomIdConstants.R227_Cave_HalfMagic,
+            // RoomIdConstants.R227_Cave_HalfMagic,
             RoomIdConstants.R239_Cave_CrystalSwitch_5ChestsRoom,
             RoomIdConstants.R268_MimicCave,
             RoomIdConstants.R291_MiniMoldormCave,
@@ -249,9 +249,9 @@ namespace EnemizerLibrary
         {
             for (int i = 0; i < 10; i++)
             {
-                this.romData[0x3742D + 0 + (i * 3)] = 0; //green mail
-                this.romData[0x3742D + 1 + (i * 3)] = 0; //blue mail
-                this.romData[0x3742D + 2 + (i * 3)] = 0; //red mail
+                this.romData[0x3742D + 0 + (i * 3)] = 0; // green mail
+                this.romData[0x3742D + 1 + (i * 3)] = 0; // blue mail
+                this.romData[0x3742D + 2 + (i * 3)] = 0; // red mail
             }
 
             for (int j = 0; j < 0xF3; j++)
@@ -265,7 +265,7 @@ namespace EnemizerLibrary
             }
         }
 
-        int[] dontModifySprites =
+        readonly int[] dontModifySprites =
         {
             SpriteConstants.PullSwitch_GoodSprite,
             SpriteConstants.PullSwitch_Unused1Sprite,

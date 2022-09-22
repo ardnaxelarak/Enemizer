@@ -50,7 +50,7 @@ namespace EnemizerCLI
                             int address;
                             if (Int32.TryParse(property.Name, out address))
                             {
-                                Patches.Add(new PatchObject() { address = address, patchData = v.Select(x => (byte)x).ToList() });
+                                Patches.Add(new PatchObject() { Address = address, PatchData = v.Select(x => (byte)x).ToList() });
                             }
                             else
                             {
@@ -74,7 +74,7 @@ namespace EnemizerCLI
         {
             foreach (var p in Patches)
             {
-                Array.Copy(p.patchData.ToArray(), 0, rom, p.address, p.patchData.Count);
+                Array.Copy(p.PatchData.ToArray(), 0, rom, p.Address, p.PatchData.Count);
             }
         }
     }

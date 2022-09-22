@@ -27,49 +27,50 @@ namespace EnemizerLibrary
         */
 
         public string Header { get; protected set; } = "ZSPR";
-        protected const int headerOffset = 0;
-        protected const int headerLength = 4;
+        protected const int HeaderOffset = 0;
+        protected const int HeaderLength = 4;
 
         public byte Version { get; protected set; } = 1;
-        protected const int versionOffset = headerOffset + headerLength;
-        protected const int versionLength = 1;
-        protected const int currentVersion = 1;
+        protected const int VersionOffset = HeaderOffset + HeaderLength;
+        protected const int VersionLength = 1;
+        protected const int CurrentVersion = 1;
 
         public uint CheckSum { get; protected set; }
-        protected const int checksumOffset = versionOffset + versionLength;
-        protected const int checksumLength = 4;
+        protected const int ChecksumOffset = VersionOffset + VersionLength;
+        protected const int ChecksumLength = 4;
 
         public bool HasValidChecksum { get; protected set; }
 
         public uint PixelDataOffset { get; protected set; }
-        protected const int pixelDataOffsetOffset = checksumOffset + checksumLength;
-        protected const int pixelDataOffsetLength = 4;
+        protected const int PixelDataOffsetOffset = ChecksumOffset + ChecksumLength;
+        protected const int PixelDataOffsetLength = 4;
 
         public ushort PixelDataLength { get; protected set; }
-        protected const int pixelDataLengthOffset = pixelDataOffsetOffset + pixelDataOffsetLength;
-        protected const int pixelDataLengthLength = 2;
+        protected const int PixelDataLengthOffset = PixelDataOffsetOffset + PixelDataOffsetLength;
+        protected const int PixelDataLengthLength = 2;
 
         public uint PaletteDataOffset { get; protected set; }
-        protected const int paletteDataOffsetOffset = pixelDataLengthOffset + pixelDataLengthLength;
-        protected const int paletteDataOffsetLength = 4;
+        protected const int PaletteDataOffsetOffset = PixelDataLengthOffset + PixelDataLengthLength;
+        protected const int PaletteDataOffsetLength = 4;
 
         public ushort PaletteDataLength { get; protected set; }
-        protected const int paletteDataLengthOffset = paletteDataOffsetOffset + paletteDataOffsetLength;
-        protected const int paletteDataLengthLength = 2;
+        protected const int PaletteDataLengthOffset = PaletteDataOffsetOffset + PaletteDataOffsetLength;
+        protected const int PaletteDataLengthLength = 2;
 
         public ushort SpriteType { get; protected set; }
-        protected const int spriteTypeOffset = paletteDataLengthOffset + paletteDataLengthLength;
-        protected const int spriteTypeLength = 2;
+        protected const int SpriteTypeOffset = PaletteDataLengthOffset + PaletteDataLengthLength;
+        protected const int SpriteTypeLength = 2;
 
-        public byte[] Reserved { get; protected set; } = new byte[reservedLength];
-        protected const int reservedOffset = spriteTypeOffset + spriteTypeLength;
-        protected const int reservedLength = 6;
+        public byte[] Reserved { get; protected set; } = new byte[ReservedLength];
+        protected const int ReservedOffset = SpriteTypeOffset + SpriteTypeLength;
+        protected const int ReservedLength = 6;
 
         protected string displayText;
         protected byte[] displayBytes;
+
         public string DisplayText
         {
-            get { return displayText; }
+            get => displayText;
             set
             {
                 displayText = value;
@@ -80,14 +81,14 @@ namespace EnemizerLibrary
             }
         }
 
-        protected const uint displayTextOffset = reservedOffset + reservedLength;
+        protected const uint DisplayTextOffset = ReservedOffset + ReservedLength;
         protected uint displayBytesLength = 0;
 
         protected string author;
         protected byte[] authorBytes;
         public string Author
         {
-            get { return author; }
+            get => author;
             set
             {
                 author = value;
@@ -103,10 +104,10 @@ namespace EnemizerLibrary
         protected byte[] authorRomDisplayBytes;
         public string AuthorRomDisplay
         {
-            get { return authorRomDisplay; }
+            get => authorRomDisplay;
             set
             {
-                if(value.Length > 20)
+                if (value.Length > 20)
                 {
                     value = value.Substring(0, 20);
                 }
@@ -124,7 +125,7 @@ namespace EnemizerLibrary
         protected byte[] pixelData;
         public byte[] PixelData
         {
-            get { return pixelData; }
+            get => pixelData;
             set
             {
                 pixelData = value;
@@ -132,6 +133,7 @@ namespace EnemizerLibrary
                 RecalculatePixelAndPaletteOffset();
             }
         }
+
         public void Set4bppPixelData(byte[] pixels)
         {
             this.pixelData = pixels;
@@ -139,11 +141,10 @@ namespace EnemizerLibrary
             RecalculatePixelAndPaletteOffset();
         }
 
-
         protected byte[] paletteData;
         public byte[] PaletteData
         {
-            get { return paletteData; }
+            get => paletteData;
             set
             {
                 paletteData = value;
@@ -201,53 +202,54 @@ namespace EnemizerLibrary
                 return;
             }
 
-            if(rawData.Length < headerLength + versionLength + checksumLength + pixelDataOffsetLength + pixelDataLengthLength + paletteDataOffsetLength + paletteDataLengthLength)
+            if (rawData.Length < HeaderLength + VersionLength + ChecksumLength + PixelDataOffsetLength + PixelDataLengthLength + PaletteDataOffsetLength + PaletteDataLengthLength)
             {
                 throw new Exception("Invalid sprite file. Too short.");
             }
-            if (false == IsZSprite(rawData))
+
+            if (!IsZSprite(rawData))
             {
                 throw new Exception("Invalid sprite file. Wrong header.");
             }
 
-            Version = rawData[versionOffset];
+            Version = rawData[VersionOffset];
 
-            CheckSum = bytesToUInt(rawData, checksumOffset);
+            CheckSum = BytesToUInt(rawData, ChecksumOffset);
 
-            PixelDataOffset = bytesToUInt(rawData, pixelDataOffsetOffset);
-            PixelDataLength = bytesToUShort(rawData, pixelDataLengthOffset);
+            PixelDataOffset = BytesToUInt(rawData, PixelDataOffsetOffset);
+            PixelDataLength = BytesToUShort(rawData, PixelDataLengthOffset);
 
-            PaletteDataOffset = bytesToUInt(rawData, paletteDataOffsetOffset);
-            PaletteDataLength = bytesToUShort(rawData, paletteDataLengthOffset);
+            PaletteDataOffset = BytesToUInt(rawData, PaletteDataOffsetOffset);
+            PaletteDataLength = BytesToUShort(rawData, PaletteDataLengthOffset);
 
             if (PaletteDataLength % 2 != 0)
             {
                 throw new Exception("Invalid sprite file. Palette size must be even.");
             }
 
-            SpriteType = bytesToUShort(rawData, spriteTypeOffset);
+            SpriteType = BytesToUShort(rawData, SpriteTypeOffset);
 
-            Array.Copy(rawData, reservedOffset, Reserved, 0, reservedLength);
+            Array.Copy(rawData, ReservedOffset, Reserved, 0, ReservedLength);
 
-            uint endOfDisplay = GetNullTerminatorUnicodeLocation(rawData, displayTextOffset);
-            uint displayLength = endOfDisplay - displayTextOffset;
+            var endOfDisplay = GetNullTerminatorUnicodeLocation(rawData, DisplayTextOffset);
+            var displayLength = endOfDisplay - DisplayTextOffset;
             if (displayLength > 0)
             {
-                byte[] displayTextBytes = new byte[displayLength];
-                Array.Copy(rawData, displayTextOffset, displayTextBytes, 0, displayLength);
+                var displayTextBytes = new byte[displayLength];
+                Array.Copy(rawData, DisplayTextOffset, displayTextBytes, 0, displayLength);
                 DisplayText = Encoding.Unicode.GetString(displayTextBytes);
             }
             else
-            { 
+            {
                 DisplayText = "";
             }
 
-            uint authorTextOffset = endOfDisplay + 2;
-            uint endOfAuthor = GetNullTerminatorUnicodeLocation(rawData, authorTextOffset);
-            uint authorLength = endOfAuthor - authorTextOffset;
-            if(authorLength > 0)
+            var authorTextOffset = endOfDisplay + 2;
+            var endOfAuthor = GetNullTerminatorUnicodeLocation(rawData, authorTextOffset);
+            var authorLength = endOfAuthor - authorTextOffset;
+            if (authorLength > 0)
             {
-                byte[] authorTextBytes = new byte[authorLength];
+                var authorTextBytes = new byte[authorLength];
                 Array.Copy(rawData, authorTextOffset, authorTextBytes, 0, authorLength);
                 Author = Encoding.Unicode.GetString(authorTextBytes);
             }
@@ -256,12 +258,12 @@ namespace EnemizerLibrary
                 Author = "";
             }
 
-            uint authorRomDisplayTextOffset = endOfAuthor + 2;
-            uint endOfAuthorRomDisplay = GetNullTerminatorAsciiLocation(rawData, authorRomDisplayTextOffset);
-            uint authorRomDisplayLength = endOfAuthorRomDisplay - authorRomDisplayTextOffset;
+            var authorRomDisplayTextOffset = endOfAuthor + 2;
+            var endOfAuthorRomDisplay = GetNullTerminatorAsciiLocation(rawData, authorRomDisplayTextOffset);
+            var authorRomDisplayLength = endOfAuthorRomDisplay - authorRomDisplayTextOffset;
             if (authorRomDisplayLength > 0)
             {
-                byte[] authorRomDisplayTextBytes = new byte[authorRomDisplayLength];
+                var authorRomDisplayTextBytes = new byte[authorRomDisplayLength];
                 Array.Copy(rawData, authorRomDisplayTextOffset, authorRomDisplayTextBytes, 0, authorRomDisplayLength);
                 AuthorRomDisplay = Encoding.ASCII.GetString(authorRomDisplayTextBytes);
             }
@@ -282,9 +284,9 @@ namespace EnemizerLibrary
 
         public uint GetNullTerminatorUnicodeLocation(byte[] rawData, uint offset)
         {
-            for(uint i = offset; i < rawData.Length; i+=2)
+            for (var i = offset; i < rawData.Length; i += 2)
             {
-                if(rawData[i] == 0 && i+1 < rawData.Length && rawData[i+1] == 0)
+                if (rawData[i] == 0 && i + 1 < rawData.Length && rawData[i + 1] == 0)
                 {
                     return i;
                 }
@@ -295,12 +297,9 @@ namespace EnemizerLibrary
 
         public uint GetNullTerminatorAsciiLocation(byte[] rawData, uint offset)
         {
-            for (uint i = offset; i < rawData.Length; i++)
+            for (var i = offset; i < rawData.Length; i++)
             {
-                if (rawData[i] == 0)
-                {
-                    return i;
-                }
+                if (rawData[i] == 0) return i;
             }
 
             return offset;
@@ -330,11 +329,11 @@ namespace EnemizerLibrary
                 UpdateChecksum();
             }
 
-            Version = currentVersion; // update the version
+            Version = CurrentVersion; // update the version
 
-            byte[] ret = new byte[headerLength + versionLength + checksumLength + pixelDataOffsetLength + pixelDataLengthLength + paletteDataOffsetLength + paletteDataLengthLength + spriteTypeLength + reservedLength + displayBytesLength + authorBytesLength + authorRomDisplayBytesLength + PixelDataLength + PaletteDataLength];
+            var ret = new byte[HeaderLength + VersionLength + ChecksumLength + PixelDataOffsetLength + PixelDataLengthLength + PaletteDataOffsetLength + PaletteDataLengthLength + SpriteTypeLength + ReservedLength + displayBytesLength + authorBytesLength + authorRomDisplayBytesLength + PixelDataLength + PaletteDataLength];
 
-            int i = 0;
+            var i = 0;
             ret[i++] = (byte)Header[0];
             ret[i++] = (byte)Header[1];
             ret[i++] = (byte)Header[2];
@@ -343,33 +342,33 @@ namespace EnemizerLibrary
             ret[i++] = Version;
 
             // check sum
-            byte[] checksum = BitConverter.GetBytes(CheckSum);
+            var checksum = BitConverter.GetBytes(CheckSum);
             ret[i++] = checksum[0];
             ret[i++] = checksum[1];
             ret[i++] = checksum[2];
             ret[i++] = checksum[3];
 
-            byte[] pixelDataOffset = BitConverter.GetBytes(PixelDataOffset);
+            var pixelDataOffset = BitConverter.GetBytes(PixelDataOffset);
             ret[i++] = pixelDataOffset[0];
             ret[i++] = pixelDataOffset[1];
             ret[i++] = pixelDataOffset[2];
             ret[i++] = pixelDataOffset[3];
 
-            byte[] pixelDataLength = BitConverter.GetBytes(PixelDataLength);
+            var pixelDataLength = BitConverter.GetBytes(PixelDataLength);
             ret[i++] = pixelDataLength[0];
             ret[i++] = pixelDataLength[1];
 
-            byte[] paletteDataOffset = BitConverter.GetBytes(PaletteDataOffset);
+            var paletteDataOffset = BitConverter.GetBytes(PaletteDataOffset);
             ret[i++] = paletteDataOffset[0];
             ret[i++] = paletteDataOffset[1];
             ret[i++] = paletteDataOffset[2];
             ret[i++] = paletteDataOffset[3];
 
-            byte[] paletteDataLength = BitConverter.GetBytes(PaletteDataLength);
+            var paletteDataLength = BitConverter.GetBytes(PaletteDataLength);
             ret[i++] = paletteDataLength[0];
             ret[i++] = paletteDataLength[1];
 
-            byte[] spriteType = BitConverter.GetBytes(SpriteType);
+            var spriteType = BitConverter.GetBytes(SpriteType);
             ret[i++] = spriteType[0];
             ret[i++] = spriteType[1];
 
@@ -380,27 +379,27 @@ namespace EnemizerLibrary
             ret[i++] = Reserved[4];
             ret[i++] = Reserved[5];
 
-            for (int x = 0; x < displayBytes.Length; x++)
+            for (var x = 0; x < displayBytes.Length; x++)
             {
                 ret[i++] = displayBytes[x];
             }
 
-            for (int x = 0; x < authorBytes.Length; x++)
+            for (var x = 0; x < authorBytes.Length; x++)
             {
                 ret[i++] = authorBytes[x];
             }
 
-            for (int x = 0; x < authorRomDisplayBytes.Length; x++)
+            for (var x = 0; x < authorRomDisplayBytes.Length; x++)
             {
                 ret[i++] = authorRomDisplayBytes[x];
             }
 
-            for (int x=0; x < PixelData.Length; x++)
+            for (var x = 0; x < PixelData.Length; x++)
             {
                 ret[i++] = PixelData[x];
             }
 
-            for (int x = 0; x < PaletteData.Length; x++)
+            for (var x = 0; x < PaletteData.Length; x++)
             {
                 ret[i++] = PaletteData[x];
             }
@@ -408,30 +407,30 @@ namespace EnemizerLibrary
             return ret;
         }
 
-        protected uint bytesToUInt(byte[] bytes, int offset)
+        protected uint BytesToUInt(byte[] bytes, int offset)
         {
             return BitConverter.ToUInt32(bytes, offset);
         }
 
-        protected ushort bytesToUShort(byte[] bytes, int offset)
+        protected ushort BytesToUShort(byte[] bytes, int offset)
         {
             return BitConverter.ToUInt16(bytes, offset);
         }
 
         protected void RecalculatePixelAndPaletteOffset()
         {
-            PixelDataOffset = displayTextOffset + displayBytesLength + authorBytesLength + authorRomDisplayBytesLength;
+            PixelDataOffset = DisplayTextOffset + displayBytesLength + authorBytesLength + authorRomDisplayBytesLength;
             PaletteDataOffset = PixelDataOffset + PixelDataLength;
         }
 
         protected void UpdateChecksum()
         {
-            byte[] checksum = { 0x00, 0x00, 0xFF, 0xFF };
+            var checksum = new byte[] { 0x00, 0x00, 0xFF, 0xFF };
             CheckSum = BitConverter.ToUInt32(checksum, 0);
 
-            byte[] bytes = this.ToByteArray(true);
-            int sum = 0;
-            for(int i=0; i<bytes.Length; i++)
+            var bytes = this.ToByteArray(true);
+            var sum = 0;
+            for (var i = 0; i < bytes.Length; i++)
             {
                 sum += bytes[i];
             }
@@ -439,7 +438,7 @@ namespace EnemizerLibrary
             checksum[0] = (byte)(sum & 0xFF);
             checksum[1] = (byte)((sum >> 8) & 0xFF);
 
-            int complement = (sum & 0xFFFF) ^ 0xFFFF;
+            var complement = (sum & 0xFFFF) ^ 0xFFFF;
             checksum[2] = (byte)(complement & 0xFF);
             checksum[3] = (byte)((complement >> 8) & 0xFF);
 
@@ -448,12 +447,12 @@ namespace EnemizerLibrary
 
         public bool IsCheckSumValid()
         {
-            byte[] storedChecksum = BitConverter.GetBytes(CheckSum);
-            byte[] checksum = { 0x00, 0x00, 0xFF, 0xFF };
+            var storedChecksum = BitConverter.GetBytes(CheckSum);
+            var checksum = new byte[] { 0x00, 0x00, 0xFF, 0xFF };
 
-            byte[] bytes = this.ToByteArray(true);
-            int sum = 0;
-            for (int i = 0; i < bytes.Length; i++)
+            var bytes = this.ToByteArray(true);
+            var sum = 0;
+            for (var i = 0; i < bytes.Length; i++)
             {
                 sum += bytes[i];
             }
@@ -461,22 +460,22 @@ namespace EnemizerLibrary
             checksum[0] = (byte)(sum & 0xFF);
             checksum[1] = (byte)((sum >> 8) & 0xFF);
 
-            int complement = (sum & 0xFFFF) ^ 0xFFFF;
+            var complement = (sum & 0xFFFF) ^ 0xFFFF;
             checksum[2] = (byte)(complement & 0xFF);
             checksum[3] = (byte)((complement >> 8) & 0xFF);
 
-            return (storedChecksum[0] == checksum[0] 
-                && storedChecksum[1] == checksum[1] 
-                && storedChecksum[2] == checksum[2] 
+            return (storedChecksum[0] == checksum[0]
+                && storedChecksum[1] == checksum[1]
+                && storedChecksum[2] == checksum[2]
                 && storedChecksum[3] == checksum[3]);
         }
 
         protected virtual void RebuildPalette()
         {
-            int numberOfPalettes = PaletteData.Length / 2;
+            var numberOfPalettes = PaletteData.Length / 2;
             Palette = new Color[numberOfPalettes];
 
-            for(int i=0; i<numberOfPalettes; i++)
+            for (var i = 0; i < numberOfPalettes; i++)
             {
                 Palette[i] = SpriteUtilities.GetColorFromBytes(PaletteData[i * 2], PaletteData[i * 2 + 1]);
             }
@@ -484,7 +483,7 @@ namespace EnemizerLibrary
 
         protected void RebuildPaletteData()
         {
-            if(this.Palette.Length != 60)
+            if (this.Palette.Length != 60)
             {
                 paletteData = new byte[this.Palette.Length * 2];
             }
@@ -499,7 +498,7 @@ namespace EnemizerLibrary
             }
             this.PaletteDataLength = (ushort)paletteData.Length;
 
-            for(int i=0; i<this.Palette.Length; i++)
+            for (var i = 0; i < this.Palette.Length; i++)
             {
                 var bytes = SpriteUtilities.GetBytesFromColor(this.Palette[i]);
                 paletteData[i * 2] = bytes[0];
@@ -513,47 +512,44 @@ namespace EnemizerLibrary
                 paletteData[122] = 0x76;
                 paletteData[123] = 0x03;
             }
-
         }
-
     }
 
     public static class SpriteUtilities
     {
         public static Color GetColorFromBytes(ushort s)
         {
-            int b = (int)(((s & 0x7C00) >> 10) << 3);
-            int g = (int)(((s & 0x03E0) >> 5) << 3);
-            int r = (int)(((s & 0x001F) >> 0) << 3);
+            var b = (int)(((s & 0x7C00) >> 10) << 3);
+            var g = (int)(((s & 0x03E0) >> 5) << 3);
+            var r = (int)(((s & 0x001F) >> 0) << 3);
 
             return Color.FromArgb(r, g, b);
         }
 
         public static Color GetColorFromBytes(byte b1, byte b2)
         {
-            ushort combined = (ushort)(((ushort)b1 | ((ushort)b2 << 8)));
+            var combined = (ushort)((ushort)b1 | ((ushort)b2 << 8));
 
             return GetColorFromBytes(combined);
         }
 
         public static ushort GetUShortFromColor(Color c)
         {
-            byte b = (byte)((c.B >> 3) & 0x1F);
-            byte g = (byte)((c.G >> 3) & 0x1F);
-            byte r = (byte)((c.R >> 3) & 0x1F);
-            ushort combined = (ushort)((b << 10) | (g << 5) | (r));
+            var b = (byte)((c.B >> 3) & 0x1F);
+            var g = (byte)((c.G >> 3) & 0x1F);
+            var r = (byte)((c.R >> 3) & 0x1F);
+            var combined = (ushort)((b << 10) | (g << 5) | (r));
             return combined;
         }
 
         public static byte[] GetBytesFromColor(Color c)
         {
-            byte[] ret = new byte[2];
+            var ret = new byte[2];
 
-            ushort combined = GetUShortFromColor(c);
+            var combined = GetUShortFromColor(c);
             ret[0] = (byte)(combined & 0xFF);
             ret[1] = (byte)((combined >> 8) & 0xFF);
             return ret;
         }
-
     }
 }

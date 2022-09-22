@@ -22,9 +22,7 @@ namespace EnemizerLibrary
 
         public static string GetSpriteName(int spriteId)
         {
-            string spriteName;
-
-            if (spriteNames.TryGetValue(spriteId, out spriteName))
+            if (spriteNames.TryGetValue(spriteId, out var spriteName))
             {
                 return spriteName;
             }
@@ -836,7 +834,7 @@ namespace EnemizerLibrary
         public static readonly byte[] sprite_subset_2 = { 12, 18, 23, 24, 28, 46, 34, 35, 39, 40, 38, 41, 36, 37, 42 };//19 trainee guard
         public static readonly byte[] sprite_subset_3 = { 17, 16, 27, 20, 82, 83 };
 
-        public static readonly byte[] NpcSprites = 
+        public static readonly byte[] NpcSprites =
         {
             PrincessZeldaSprite,
             UnclePriestSprite

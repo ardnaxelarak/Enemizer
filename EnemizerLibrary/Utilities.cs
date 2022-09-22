@@ -6,13 +6,13 @@ namespace EnemizerLibrary
     {
         public static int SnesToPCAddress(int addr)
         {
-            int temp = (addr & 0x7FFF) + ((addr / 2) & 0xFF8000);
+            var temp = (addr & 0x7FFF) + ((addr / 2) & 0xFF8000);
             return (temp);
         }
 
         public static int PCToSnesAddress(int addr)
         {
-            byte[] b = BitConverter.GetBytes(addr);
+            var b = BitConverter.GetBytes(addr);
             b[2] = (byte)(b[2] * 2);
             if (b[1] >= 0x80)
                 b[2] += 1;
@@ -24,14 +24,14 @@ namespace EnemizerLibrary
 
         public static byte[] PCAddressToSnesByteArray(int pos)
         {
-            int addr = PCToSnesAddress(pos);
+            var addr = PCToSnesAddress(pos);
 
             return new byte[] { (byte)(addr >> 16), ((byte)(addr >> 8)), ((byte)addr) };
         }
 
         public static int SnesByteArrayTo24bitSnesAddress(byte[] addressBytes)
         {
-            if(addressBytes.Length != 3)
+            if (addressBytes.Length != 3)
             {
                 throw new Exception($"SnesByteArrayTo24bitSnesAddress requires 3 bytes of input. {addressBytes.Length} were passed in.");
             }

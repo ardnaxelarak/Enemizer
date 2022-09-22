@@ -6,10 +6,10 @@ namespace EnemizerLibrary
 {
     public class DungeonSpriteRandomizer
     {
-        byte[][] random_sprite_group = new byte[60][];
+        readonly byte[][] random_sprite_group = new byte[60][];
 
-        Random rand;
-        RomData romData;
+        readonly Random rand;
+        readonly RomData romData;
 
         public DungeonSpriteRandomizer(RomData romData, Random rand)
         {
@@ -30,35 +30,34 @@ namespace EnemizerLibrary
 
             foreach (int room in roomSprites.randomized_rooms)
             {
-
                 while (true)
                 {
-
                     // Select one of the 60 sprites group avoid the ones that are empty because they contain npcs/bosses
                     byte sprite_group = (byte)rand.Next(60);
-                    if (random_sprite_group[sprite_group].Length == 0) { continue; } //restart
+                    if (random_sprite_group[sprite_group].Length == 0) { continue; } // restart
 
-                    //The group we selected is not empty - check if the room is part of a special room
+                    // The group we selected is not empty - check if the room is part of a special room
 
-                    /*NOTE Some room have multiple required sprites like shadows, crystal switches might need to force a
-                     * specific group for these rooms*/
+                    /* NOTE: Some rooms have multiple required sprites like shadows, crystal switches;
+                     * might need to force a specific group for these rooms
+                     */
 
                     Console.WriteLine("Start Generation " + room.ToString());
-                    //tongue switch/crystal subset3 on 83
-                    //switch/crystal subset3 on  82
-                    if (RoomIdConstants.WallMasterRoom.Contains(room)) //if the current room is switch room
+                    // tongue switch/crystal subset3 on 83
+                    // switch/crystal subset3 on  82
+                    if (RoomIdConstants.WallMasterRoom.Contains(room)) // if the current room is switch room
                     {
                         sprite_group = 39;
                         Console.WriteLine("Required Wall Master");
                     }
 
-                    if (RoomIdConstants.canonRoom.Contains(room))//if the current room is an Moving wall canon room
+                    if (RoomIdConstants.canonRoom.Contains(room)) // if the current room is an Moving wall canon room
                     {
                         if (random_sprite_group[sprite_group][0] != 47) { continue; }
                         Console.WriteLine("Required Canon1");
                     }
 
-                    if (RoomIdConstants.ShadowRoom.Contains(room)) //if the current room is an Shadow room
+                    if (RoomIdConstants.ShadowRoom.Contains(room)) // if the current room is an Shadow room
                     {
                         if (random_sprite_group[sprite_group][1] != 32) { continue; }
                         Console.WriteLine("Shadow");
@@ -82,32 +81,31 @@ namespace EnemizerLibrary
                         Console.WriteLine("Required Canon2");
                     }
 
-                    if (RoomIdConstants.TonguesRoom.Contains(room)) //if the current room is tongue room
+                    if (RoomIdConstants.TonguesRoom.Contains(room)) // if the current room is tongue room
                     {
                         if (random_sprite_group[sprite_group][3] != 83) { continue; }
                         Console.WriteLine("Required Tongues");
                     }
 
-                    if (RoomIdConstants.SwitchesRoom.Contains(room)) //if the current room is switch room
+                    if (RoomIdConstants.SwitchesRoom.Contains(room)) // if the current room is switch room
                     {
                         if (random_sprite_group[sprite_group][3] != 82) { continue; }
                         Console.WriteLine("Required Switches");
                     }
 
-                    if (RoomIdConstants.bumperandcrystalRoom.Contains(room)) //if the current room is bumper/crystal/laser eye room
+                    if (RoomIdConstants.bumperandcrystalRoom.Contains(room)) // if the current room is bumper/crystal/laser eye room
                     {
                         if (random_sprite_group[sprite_group][3] == 82 || random_sprite_group[sprite_group][3] == 83)
                         {
-
                         }
                         else
                         { continue; }
                         Console.WriteLine("Required BumperCrystalEyes");
                     }
 
-                    if (room == RoomIdConstants.R85_CastleSecretEntrance_UncleDeathRoom) //uncle
+                    if (room == RoomIdConstants.R85_CastleSecretEntrance_UncleDeathRoom) // uncle
                     {
-                        sprite_group = 13; //force sprite_group to be uncle 13
+                        sprite_group = 13; // force sprite_group to be uncle 13
                     }
 
                     if (room == RoomIdConstants.R127_IcePalace_BigSpikeTrapsRoom)
@@ -118,12 +116,10 @@ namespace EnemizerLibrary
                         }
                     }
 
-
                     if (roomSprites.RoomSprites[room].Length != 0)
                     {
                         //we finally have a sprite_group that contain good subset for that room
                         List<byte> sprites = new List<byte>(); //create a new list of sprite that can possibly be in the room
-
 
                         bool need_killable_sprite = false;
                         //check all the sprites addresses of that room we are in check if that room is a "shutter door" room
@@ -135,19 +131,19 @@ namespace EnemizerLibrary
                             }
                         }
 
-                        foreach (byte s in subset_gfx_sprites[random_sprite_group[sprite_group][0]]) //add all subset0 sprites of the selected group
+                        foreach (byte s in subset_gfx_sprites[random_sprite_group[sprite_group][0]]) // add all subset0 sprites of the selected group
                         {
                             sprites.Add(s);
                         }
-                        foreach (byte s in subset_gfx_sprites[random_sprite_group[sprite_group][1]]) //add all subset1 sprites of the selected group
+                        foreach (byte s in subset_gfx_sprites[random_sprite_group[sprite_group][1]]) // add all subset1 sprites of the selected group
                         {
                             sprites.Add(s);
                         }
-                        foreach (byte s in subset_gfx_sprites[random_sprite_group[sprite_group][2]]) //add all subset2 sprites of the selected group
+                        foreach (byte s in subset_gfx_sprites[random_sprite_group[sprite_group][2]]) // add all subset2 sprites of the selected group
                         {
                             sprites.Add(s);
                         }
-                        foreach (byte s in subset_gfx_sprites[random_sprite_group[sprite_group][3]]) //add all subset3 sprites of the selected group
+                        foreach (byte s in subset_gfx_sprites[random_sprite_group[sprite_group][3]]) // add all subset3 sprites of the selected group
                         {
                             sprites.Add(s);
                         }
@@ -168,22 +164,22 @@ namespace EnemizerLibrary
                             }
                         }
                         int c = sprites.Count;
-                        //LAG REDUCTION CODE !!!
-                        if (room == RoomIdConstants.R203_ThievesTown_NorthWestEntranceRoom) //add same amount of green rupee in the pool as the number of sprites
+                        // LAG REDUCTION CODE !!!
+                        if (room == RoomIdConstants.R203_ThievesTown_NorthWestEntranceRoom) // add same amount of green rupee in the pool as the number of sprites
                         {
                             for (int i = 0; i < c; i++)
                             {
                                 sprites.Add(0xD9);
                             }
                         }
-                        if (room == RoomIdConstants.R204_ThievesTown_NorthEastEntranceRoom) //add same amount of green rupee in the pool as the number of sprites
+                        if (room == RoomIdConstants.R204_ThievesTown_NorthEastEntranceRoom) // add same amount of green rupee in the pool as the number of sprites
                         {
                             for (int i = 0; i < c; i++)
                             {
                                 sprites.Add(0xD9);
                             }
                         }
-                        if (room == RoomIdConstants.R220_ThievesTown_SouthEastEntranceRoom) //add same amount of green rupee in the pool as the number of sprites
+                        if (room == RoomIdConstants.R220_ThievesTown_SouthEastEntranceRoom) // add same amount of green rupee in the pool as the number of sprites
                         {
                             for (int i = 0; i < c; i++)
                             {
@@ -195,12 +191,11 @@ namespace EnemizerLibrary
                         for (int i = 0; i < roomSprites.RoomSprites[room].Length; i++)
                         {
                             byte selected_sprite = sprites[rand.Next(real_sprites)];
-                            //Select a new sprite from the sprites list we will put at that address
+                            // Select a new sprite from the sprites list we will put at that address
                             if (absorbable == true)
                             {
                                 selected_sprite = sprites[rand.Next(real_sprites + (rand.Next(3)))];
                             }
-
 
                             if (RoomIdConstants.noStatueRoom.Contains(room))
                             {
@@ -226,11 +221,9 @@ namespace EnemizerLibrary
                                 }
                             }
 
-
                             if (roomSprites.RoomSprites[room][i] == 0x04DE29)
                             {
-                                if (selected_sprite == 0x7D | selected_sprite == 0x8A | selected_sprite == 0x61 |
-                                     selected_sprite == 0x15)
+                                if (selected_sprite == 0x7D | selected_sprite == 0x8A | selected_sprite == 0x61 | selected_sprite == 0x15)
                                 {
                                     continue;
                                 }
@@ -284,8 +277,7 @@ namespace EnemizerLibrary
                                         }
                                         break;
                                     }
-                                    if (protection_try >= 200) { break; }//reset from the start
-
+                                    if (protection_try >= 200) { break; } //reset from the start
                                 }
                             }
 
@@ -308,14 +300,14 @@ namespace EnemizerLibrary
                 }
 
             }
-            //remove key in skull wood to prevent a softlock
+            // remove key in skull wood to prevent a softlock
             romData[0x04DD74] = 0x16;
             romData[0x04DD75] = 0x05;
             romData[0x04DD76] = 0xE4;
 
-            //remove all sprite in the room before boss room in mire can cause problem with different boss in the room
-            //NOT NEEDED ANYMORE
-            //ROM_DATA[0x04E591] = 0xFF;
+            // remove all sprite in the room before boss room in mire can cause problem with different boss in the room
+            // NOT NEEDED ANYMORE
+            // ROM_DATA[0x04E591] = 0xFF;
         }
 
         public List<byte> remove_unkillable_sprite(int room, List<byte> sprites)
@@ -360,60 +352,57 @@ namespace EnemizerLibrary
                         continue;
                     }
                 }
-
             }
             return sprites;
-
         }
-
 
         public void create_sprite_group()
         {
             // id + 0x40 (64) = HM block id
-            //Creations of the guards group :
-            random_sprite_group[0] = new byte[] { }; //Do not randomize that group (Ending thing?)
+            // Creations of the guards group :
+            random_sprite_group[0] = new byte[] { }; // Do not randomize that group (Ending thing?)
             random_sprite_group[1] = new byte[] { 70, get_guard_subset_1(), 19, SpriteConstants.sprite_subset_3[rand.Next(SpriteConstants.sprite_subset_3.Length)] };
-            random_sprite_group[2] = new byte[] { 70, get_guard_subset_1(), 19, 83 }; //tongue switch group
+            random_sprite_group[2] = new byte[] { 70, get_guard_subset_1(), 19, 83 }; // tongue switch group
             random_sprite_group[3] = new byte[] { 72, get_guard_subset_1(), 19, SpriteConstants.sprite_subset_3[rand.Next(SpriteConstants.sprite_subset_3.Length)] };
-            random_sprite_group[4] = new byte[] { 72, get_guard_subset_1(), 19, 82 }; //switch group
-            random_sprite_group[5] = new byte[] { }; //Do not randomize that group (Npcs, Items, some others thing)
-            random_sprite_group[6] = new byte[] { }; //Do not randomize that group (Sanctuary Mantle, Priest)
-            random_sprite_group[7] = new byte[] { };//Do not randomize that group (Npcs, Arghus)
-            random_sprite_group[8] = fully_randomize_that_group(); //Force Group 8 for Iceman subset2 on 38
+            random_sprite_group[4] = new byte[] { 72, get_guard_subset_1(), 19, 82 }; // switch group
+            random_sprite_group[5] = new byte[] { }; // Do not randomize that group (Npcs, Items, some others thing)
+            random_sprite_group[6] = new byte[] { }; // Do not randomize that group (Sanctuary Mantle, Priest)
+            random_sprite_group[7] = new byte[] { }; // Do not randomize that group (Npcs, Arghus)
+            random_sprite_group[8] = fully_randomize_that_group(); // Force Group 8 for Iceman subset2 on 38
             random_sprite_group[8][2] = 38;
-            random_sprite_group[9] = new byte[] { };//Do not randomize that group (Armos Knight)
-            random_sprite_group[10] = fully_randomize_that_group(); //Force Group 10 for Watersprites subset2 on 34
+            random_sprite_group[9] = new byte[] { }; // Do not randomize that group (Armos Knight)
+            random_sprite_group[10] = fully_randomize_that_group(); // Force Group 10 for Watersprites subset2 on 34
             random_sprite_group[10][2] = 34;
-            random_sprite_group[11] = new byte[] { };//Do not randomize that group (Lanmolas)
-            random_sprite_group[12] = new byte[] { }; //Do not randomize that group (Moldorm)
+            random_sprite_group[11] = new byte[] { }; // Do not randomize that group (Lanmolas)
+            random_sprite_group[12] = new byte[] { }; // Do not randomize that group (Moldorm)
             random_sprite_group[13] = fully_randomize_that_group(); //(Link's House)/Sewer restore uncle (81)
             random_sprite_group[13][0] = 81;
-            random_sprite_group[14] = new byte[] { }; //Do not randomize that group (Npcs)
-            random_sprite_group[15] = new byte[] { };//Do not randomize that group (Npcs)
-            random_sprite_group[16] = new byte[] { }; //Do not randomize that group (Minigame npcs, witch)
+            random_sprite_group[14] = new byte[] { }; // Do not randomize that group (Npcs)
+            random_sprite_group[15] = new byte[] { }; // Do not randomize that group (Npcs)
+            random_sprite_group[16] = new byte[] { }; // Do not randomize that group (Minigame npcs, witch)
             random_sprite_group[17] = fully_randomize_that_group();//Force Group 17 for Shadow(Zoro) Subset 1 on 32
             random_sprite_group[17][1] = 32;
-            random_sprite_group[18] = new byte[] { };//Do not randomize that group (Vitreous?,Agahnim)
+            random_sprite_group[18] = new byte[] { }; // Do not randomize that group (Vitreous?,Agahnim)
             random_sprite_group[19] = fully_randomize_that_group();//Force group 19 for Wallmaster Subset2 on 35
             random_sprite_group[19][2] = 35;
-            random_sprite_group[20] = new byte[] { }; //Do not randomize that group (Bosses)
-            random_sprite_group[21] = new byte[] { }; //Do not randomize that group (Bosses)
-            random_sprite_group[22] = new byte[] { };//Do not randomize that group (Bosses)
-            random_sprite_group[23] = new byte[] { }; //Do not randomize that group (Bosses)
-            random_sprite_group[24] = new byte[] { }; //Do not randomize that group (Bosses)
+            random_sprite_group[20] = new byte[] { }; // Do not randomize that group (Bosses)
+            random_sprite_group[21] = new byte[] { }; // Do not randomize that group (Bosses)
+            random_sprite_group[22] = new byte[] { }; // Do not randomize that group (Bosses)
+            random_sprite_group[23] = new byte[] { }; // Do not randomize that group (Bosses)
+            random_sprite_group[24] = new byte[] { }; // Do not randomize that group (Bosses)
             random_sprite_group[25] = fully_randomize_that_group();
-            random_sprite_group[26] = new byte[] { };//Do not randomize that group (Bosses)
-            random_sprite_group[27] = fully_randomize_that_group();//Force group 27 for movingwallcanon subset0 on 47
+            random_sprite_group[26] = new byte[] { }; // Do not randomize that group (Bosses)
+            random_sprite_group[27] = fully_randomize_that_group(); // Force group 27 for movingwallcanon subset0 on 47
             random_sprite_group[27][0] = 47;
-            random_sprite_group[28] = fully_randomize_that_group();//Force group 27 for canon rooms subset2 on 46
+            random_sprite_group[28] = fully_randomize_that_group(); // Force group 27 for canon rooms subset2 on 46
             random_sprite_group[28][2] = 46;
             random_sprite_group[29] = fully_randomize_that_group();
             random_sprite_group[30] = fully_randomize_that_group();
             random_sprite_group[31] = fully_randomize_that_group();
-            random_sprite_group[32] = new byte[] { }; //Do not randomize that group (Bosses)
+            random_sprite_group[32] = new byte[] { }; // Do not randomize that group (Bosses)
             random_sprite_group[33] = fully_randomize_that_group();
-            random_sprite_group[34] = new byte[] { }; //Do not randomize that group (Ganon)
-            random_sprite_group[35] = new byte[] { }; //Do not randomize that group (Lanmolas)
+            random_sprite_group[34] = new byte[] { }; // Do not randomize that group (Ganon)
+            random_sprite_group[35] = new byte[] { }; // Do not randomize that group (Lanmolas)
             random_sprite_group[36] = fully_randomize_that_group();
             random_sprite_group[37] = fully_randomize_that_group();
             random_sprite_group[38] = fully_randomize_that_group();
@@ -421,11 +410,8 @@ namespace EnemizerLibrary
             random_sprite_group[39][2] = 35;
             random_sprite_group[39][3] = 82;
 
-
-
-
-            //room 88 require bumper, switch
-            //room 104 require bumper, wall master
+            // room 88 require bumper, switch
+            // room 104 require bumper, wall master
             random_sprite_group[40] = new byte[] { }; //Do not randomize that group (Npcs)
             for (int i = 41; i < 60; i++)
             {
@@ -447,12 +433,7 @@ namespace EnemizerLibrary
             for (int i = 0; i < SpriteConstants.statis_sprites.Length; i++)
             {
                 romData[0x6B44C + SpriteConstants.statis_sprites[i]] = (byte)(romData[0x6B44C + SpriteConstants.statis_sprites[i]] | 0x40);
-
-
             }
-
-
-
         }
 
         public void patch_sprite_group()
@@ -488,6 +469,5 @@ namespace EnemizerLibrary
                 SpriteConstants.sprite_subset_3[rand.Next(SpriteConstants.sprite_subset_3.Length)]
             };
         }
-
     }
 }

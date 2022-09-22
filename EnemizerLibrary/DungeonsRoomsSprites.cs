@@ -2,7 +2,7 @@
 {
     public class RoomSpriteCollection
     {
-        int[][] room_sprites = new int[292][];
+        readonly int[][] room_sprites = new int[292][];
 
         public int[][] RoomSprites
         {
@@ -12,8 +12,8 @@
             }
         }
 
-        //All the room randomized //Might add all the rooms and remove the sprites in the unchanged rooms to randomize the palettes in every rooms
-        public int[] randomized_rooms = 
+        //All the room randomized // Might add all the rooms and remove the sprites in the unchanged rooms to randomize the palettes in every rooms
+        public int[] randomized_rooms =
         {
             2,4,9,10,11,14,17,19,21,22,23,25,26,27,30,31,33,34,36,38,39,40,42,43,46,49,50,52,53,54,55,56,57,58,59,
             60,61,62,63,64,65,66,67,68,69,70,73,74,75,76,78,80,81,82,83,84,85,86,87,88,89,91,92,93,94,95,96,97,98,99,
@@ -23,7 +23,7 @@
             216,217,218,219,220,223,224,228,232,238,239,240,249,251,235,254,263,264,268,269,291,267,185,286,181,150
         }; //127 removed
 
-        public RoomSpriteCollection() //Will require a double check
+        public RoomSpriteCollection() // Will require a double check
         {
             for (int i = 0; i < 292; i++)
             {
@@ -212,7 +212,7 @@
 
             room_sprites[126] = new int[] { 0x04E2F2, 0x04E2F5, 0x04E2FE, 0x04E301 };
 
-            room_sprites[127] = new int[] { };// 0x04E306, 0x04E309, 0x04E30C, 0x04E30F, 0x04E312, 0x04E315, 0x04E318, 0x04E31B };
+            room_sprites[127] = new int[] { /* 0x04E306, 0x04E309, 0x04E30C, 0x04E30F, 0x04E312, 0x04E315, 0x04E318, 0x04E31B */ };
 
             room_sprites[128] = new int[] { 0x04E323, 0x04E326 };
 
@@ -260,7 +260,7 @@
 
             room_sprites[158] = new int[] { 0x04E56E, 0x04E571, 0x04E574, 0x04E577 };
 
-            room_sprites[159] = new int[] { 0x04E58B, 0x04E58E };//Might cause crashes // 0x04E57F,0x04E582,0x04E585,0x04E588,0x04E58B,0x04E58E,};
+            room_sprites[159] = new int[] { 0x04E58B, 0x04E58E }; // Might cause crashes -- 0x04E57F, 0x04E582, 0x04E585, 0x04E588, 0x04E58B, 0x04E58E
 
             room_sprites[160] = new int[] { 0x04E593, 0x04E596, 0x04E599 };
 
@@ -268,8 +268,7 @@
 
             room_sprites[165] = new int[] { 0x04E5C8, 0x04E5CB, 0x04E5CE, 0x04E5D1, 0x04E5D4, 0x04E5D7, 0x04E5DA, 0x04E5DD, 0x04E5E6, 0x04E5E9 };
 
-            //room_sprites[166] = new int[]{ 0x04E5EE,0x04E5F1,};
-            room_sprites[166] = new int[] { };
+            room_sprites[166] = new int[] { /* 0x04E5EE, 0x04E5F1 */ };
 
             room_sprites[167] = new int[] { 0x04E5F6, 0x04E5F9 };
 
@@ -383,7 +382,7 @@
 
             room_sprites[267] = new int[] { 0x04EBBE };
 
-            room_sprites[268] = new int[] { };//{ 0x04EBC3, 0x04EBC6, 0x04EBC9, 0x04EBCC, 0x04EBCF, 0x04EBD2, 0x04EBD5, 0x04EBD8 };
+            room_sprites[268] = new int[] { /* 0x04EBC3, 0x04EBC6, 0x04EBC9, 0x04EBCC, 0x04EBCF, 0x04EBD2, 0x04EBD5, 0x04EBD8 */ };
 
             room_sprites[269] = new int[] { 0x04EBDD, 0x04EBE0, };
 
