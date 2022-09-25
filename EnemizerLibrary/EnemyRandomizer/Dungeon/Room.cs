@@ -236,6 +236,8 @@ namespace EnemizerLibrary
                 var spritesToUpdate = this.Sprites.Where(x => spriteRequirementCollection.RandomizableSprites.Select(y => y.SpriteId).Contains(x.SpriteId))
                     .ToList();
 
+                if (spritesToUpdate.Count == 0) return;
+
                 // TODO: something less hacky for shutters.
                 var keySprites = spritesToUpdate.Where(x => x.HasAKey).ToList();
                 var shutterSprites = spritesToUpdate.Where(x => this.IsShutterRoom && !x.HasAKey).ToList();
@@ -252,40 +254,38 @@ namespace EnemizerLibrary
                 {
                     throw new Exception("Shutter room without any killable enemies");
                 }
-                if (this.IsWaterRoom && waterSprites.Count == 0)
-                {
-                    throw new Exception("Water room without any water sprites");
-                }
 
-                Debug.Assert(possibleSprites.Contains(SpriteConstants.EmptySprite) == false);
-                Debug.Assert(killableSprites.Contains(SpriteConstants.EmptySprite) == false);
-                Debug.Assert(killableKeySprites.Contains(SpriteConstants.EmptySprite) == false);
-                Debug.Assert(waterSprites.Contains(SpriteConstants.EmptySprite) == false);
+                Debug.Assert(!possibleSprites.Contains(SpriteConstants.EmptySprite));
+                Debug.Assert(!killableSprites.Contains(SpriteConstants.EmptySprite));
+                Debug.Assert(!killableKeySprites.Contains(SpriteConstants.EmptySprite));
+                Debug.Assert(!waterSprites.Contains(SpriteConstants.EmptySprite));
 
                 int[] possibleAbsorbableSprites = GetAbsorbableSprites(spriteRequirementCollection, optionFlags);
                 int stalCount = 0;
 
                 if (this.IsWaterRoom)
                 {
-                    spritesToUpdate.ToList()
-                        .ForEach(x => x.SpriteId = waterSprites[rand.Next(waterSprites.Count)]);
+                    var waterSpritesToUpdate = spritesToUpdate.Where(x => spriteRequirementCollection.WaterSprites.Select(x => x.SpriteId).Contains(x.SpriteId)).ToList();
+                    if (waterSpritesToUpdate.Count > 0 && waterSprites.Count == 0)
+                    {
+                        throw new Exception("Water room without any water sprites");
+                    }
+                    waterSpritesToUpdate.ForEach(x => x.SpriteId = waterSprites[rand.Next(waterSprites.Count)]);
 
-                    return;
-                }
-                else
-                {
-                    // remove water sprites
-                    possibleSprites = possibleSprites.Where(x => waterSprites.Contains(x) == false).ToArray();
+                    spritesToUpdate = spritesToUpdate.Where(x => !waterSpritesToUpdate.Contains(x)).ToList();
                 }
 
-                foreach (var s in spritesToUpdate.Where(x => x.HasAKey == false).ToList())
+                // remove water sprites
+                possibleSprites = possibleSprites.Where(x => !waterSprites.Contains(x)).ToArray();
+
+                foreach (var s in spritesToUpdate.Where(x => !x.HasAKey).ToList())
                 {
                     int spriteId = -1;
 
                     // don't put stal in shutter rooms
-                    if (false == this.IsShutterRoom && rand.Next(0, 100) <= 5)
+                    if (!this.IsShutterRoom && rand.Next(0, 100) <= 5)
                     {
-                        //spawn a stal
+                        // spawn a stal
                         spriteId = SpriteConstants.StalSprite;
                     }
                     else
@@ -306,7 +306,7 @@ namespace EnemizerLibrary
                     if (spriteId == SpriteConstants.StalSprite)
                     {
                         stalCount++;
-                        if (stalCount > 2)// && possibleSprites.Count() > 1) // max 2 in a room
+                        if (stalCount > 2) // && possibleSprites.Count() > 1) // max 2 in a room
                         {
                             possibleSprites = possibleSprites.Where(x => x != SpriteConstants.StalSprite).ToArray();
                         }

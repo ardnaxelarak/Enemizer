@@ -83,10 +83,7 @@ namespace EnemizerLibrary
         public bool UseManualBosses { get; set; } = false; // used by randomizer web
         public ManualBosses ManualBosses { get; set; }
 
-        public OptionFlags()
-        {
-
-        }
+        public OptionFlags() { }
 
         public OptionFlags(byte[] optionBytes)
         {

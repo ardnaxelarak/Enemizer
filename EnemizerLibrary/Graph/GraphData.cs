@@ -61,9 +61,9 @@ namespace EnemizerLibrary
 
         void UpdateFromOptions(OptionFlags optionFlags, RawRoomEdgeCollection rawRoomEdgeCollection)
         {
-            if (optionFlags.RandomizeEnemies && 
-                (optionFlags.RandomizeEnemiesType == RandomizeEnemiesType.Chaos
-                || optionFlags.RandomizeEnemiesType == RandomizeEnemiesType.Insanity)) // TODO: what else?
+            if (optionFlags.RandomizeEnemies)
+            // && (optionFlags.RandomizeEnemiesType == RandomizeEnemiesType.Chaos
+            //  || optionFlags.RandomizeEnemiesType == RandomizeEnemiesType.Insanity)) // TODO: what else?
             {
                 foreach (var r in rawRoomEdgeCollection.RawRoomEdges.Where(x => x.requirements.Contains("Bow")))
                 {

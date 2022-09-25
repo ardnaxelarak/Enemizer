@@ -26,6 +26,7 @@ namespace EnemizerLibrary
         public List<byte> SubGroup3 { get; set; } = new List<byte>();
         public byte? Parameters { get; set; }
         public bool SpecialGlitched { get; set; }
+        public RandomizeEnemiesType MinDifficulty { get; set; } = RandomizeEnemiesType.Chaos;
 
         readonly List<int> excludedRooms = new();
         readonly List<int> dontRandomizeRooms = new();
@@ -132,6 +133,13 @@ namespace EnemizerLibrary
         public SpriteRequirement SetKillable()
         {
             Killable = true;
+            MinDifficulty = RandomizeEnemiesType.Basic;
+            return this;
+        }
+
+        public SpriteRequirement SetMinDifficulty(RandomizeEnemiesType difficulty)
+        {
+            MinDifficulty = difficulty;
             return this;
         }
 
@@ -236,21 +244,29 @@ namespace EnemizerLibrary
 
     public class SpriteRequirementCollection
     {
+        private OptionFlags optionFlags;
+
         public List<SpriteRequirement> SpriteRequirements { get; set; }
 
         public IEnumerable<SpriteRequirement> RandomizableSprites
         {
-            get => SpriteRequirements.Where(x => !x.DoNotRandomize);
+            get => SpriteRequirements.Where(x => !x.DoNotRandomize && (x.MinDifficulty <= optionFlags.RandomizeEnemiesType));
         }
 
         public List<SpriteRequirement> DoNotRandomizeSprites
         {
-            get => SpriteRequirements.Where(x => x.DoNotRandomize).ToList();
+            get => SpriteRequirements.Where(x => x.DoNotRandomize || (x.MinDifficulty > optionFlags.RandomizeEnemiesType)).ToList();
         }
 
         public IEnumerable<SpriteRequirement> UsableEnemySprites
         {
-            get => SpriteRequirements.Where(x => !x.NPC && x.IsEnemySprite && !x.Boss && !x.Overlord && !x.IsObject);
+            get => SpriteRequirements.Where(
+                x => !x.NPC
+                && x.IsEnemySprite
+                && !x.Boss
+                && !x.Overlord
+                && !x.IsObject
+                && (x.MinDifficulty <= optionFlags.RandomizeEnemiesType));
         }
 
         public IEnumerable<SpriteRequirement> GetUsableDungeonEnemySprites(bool allowAbsorbable = false)
@@ -274,17 +290,27 @@ namespace EnemizerLibrary
             get => SpriteRequirements.Where(x => x.IsWaterSprite);
         }
 
-        public SpriteRequirementCollection()
+        public SpriteRequirementCollection(OptionFlags optionFlags = null)
         {
+            if (optionFlags is null)
+            {
+                this.optionFlags = new();
+            }
+            else
+            {
+                this.optionFlags = optionFlags;
+            }
             SpriteRequirements = new List<SpriteRequirement>
             {
                 SpriteRequirement.New(SpriteConstants.RavenSprite)
                     .SetCannotHaveKey()
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup3(17, 25)
                     .AddExcludedRooms(dontUseFlyingSprites),
 
                 SpriteRequirement.New(SpriteConstants.VultureSprite)
                     .SetCannotHaveKey()
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup2(18)
                     .AddExcludedRooms(dontUseFlyingSprites),
 
@@ -318,6 +344,7 @@ namespace EnemizerLibrary
                     .AddSubgroup2(12),
 
                 SpriteRequirement.New(SpriteConstants.ChickenSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Hard)
                     .AddSubgroup3(21, 80)
                     .AddExcludedRooms(dontUseFlyingSprites),
 
@@ -361,6 +388,7 @@ namespace EnemizerLibrary
                     .SetNeverUse(),
 
                 SpriteRequirement.New(SpriteConstants.AntifairySprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup3(82, 83)
                     .AddExcludedRooms(RoomIdConstants.R64_AgahnimsTower_FinalBridgeRoom) // can make it almost impossible to advance without powder
                     .AddExcludedRooms(dontUseFlyingSprites),
@@ -382,6 +410,7 @@ namespace EnemizerLibrary
 
                 SpriteRequirement.New(SpriteConstants.PoeSprite)
                     .SetCannotHaveKey()
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup3(14, 21)
                     .AddExcludedRooms(dontUseFlyingSprites),
 
@@ -418,6 +447,7 @@ namespace EnemizerLibrary
                     .AddSubgroup0(81),
 
                 SpriteRequirement.New(SpriteConstants.SluggulaSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup2(37),
 
                 SpriteRequirement.New(SpriteConstants.PushSwitchSprite)
@@ -447,9 +477,11 @@ namespace EnemizerLibrary
                     .AddSubgroup0(21),
 
                 SpriteRequirement.New(SpriteConstants.HardhatBeetleSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup1(30),
 
                 SpriteRequirement.New(SpriteConstants.DeadrockSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup3(16)
                     .AddExcludedRooms(RoomIdConstants.R127_IcePalace_BigSpikeTrapsRoom)
                     .AddExcludedRooms(RoomIdConstants.R268_MimicCave),
@@ -560,6 +592,7 @@ namespace EnemizerLibrary
                     .AddGroup(6),
 
                 SpriteRequirement.New(SpriteConstants.RockHoarderSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup3(17)
                     .AddExcludedRooms(RoomIdConstants.R268_MimicCave),
 
@@ -667,6 +700,7 @@ namespace EnemizerLibrary
 
                 SpriteRequirement.New(SpriteConstants.FireballZoraSprite)
                     .SetWaterSprite()
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup2(12, 24),
 
                 SpriteRequirement.New(SpriteConstants.WalkingZoraSprite)
@@ -855,6 +889,7 @@ namespace EnemizerLibrary
 
                 // are these killable???
                 SpriteRequirement.New(SpriteConstants.FloatingStalfosHeadSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup0(31)
                     .AddExcludedRooms(dontUseFlyingSprites), // TODO: check this because it only shows up as stalfos head in game??
 
@@ -877,6 +912,7 @@ namespace EnemizerLibrary
 
                 SpriteRequirement.New(SpriteConstants.WaterTektiteSprite)
                     .SetWaterSprite()
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup2(34)
                     .AddDontRandomizeRooms(RoomIdConstants.R40_SwampPalace_EntranceRoom)
                     .AddExcludedRooms(dontUseFlyingSprites),
@@ -893,6 +929,7 @@ namespace EnemizerLibrary
                     .AddExcludedRooms(RoomIdConstants.R268_MimicCave),
 
                 SpriteRequirement.New(SpriteConstants.RedEyegoreSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup2(46),
 
                 // SpriteRequirement.New(SpriteConstants.YellowStalfosSprite), // TODO: add
@@ -931,21 +968,25 @@ namespace EnemizerLibrary
                     .AddSubgroup2(57),
 
                 SpriteRequirement.New(SpriteConstants.TerrorpinSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup2(42)
                     .AddExcludedRooms(RoomIdConstants.R268_MimicCave),
 
                 SpriteRequirement.New(SpriteConstants.SlimeSprite_JumpsOutOfTheFloor)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup1(32),
 
                 // these will never work right in the overworld without rewriting the asm
                 // and only work in dungeons with exits
                 SpriteRequirement.New(SpriteConstants.WallmasterSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .SetDoNotRandomize()
                     .SetNeverUseOverworld()
                     .AddSubgroup2(35)
                     .AddSpawnableRooms(dungeonRooms),
 
                 SpriteRequirement.New(SpriteConstants.StalfosKnightSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup1(32)
                     .AddExcludedRooms(RoomIdConstants.R268_MimicCave),
 
@@ -1001,6 +1042,7 @@ namespace EnemizerLibrary
 
                 // can't be killed with bombs so don't put them in key/shutter rooms
                 SpriteRequirement.New(SpriteConstants.WizzrobeSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup2(37, 41),
 
                 // removed from keys because key could get stuck in wall if you kill it in the wall
@@ -1059,11 +1101,13 @@ namespace EnemizerLibrary
 
                 SpriteRequirement.New(SpriteConstants.BomberFlyingCreaturesFromDarkworldSprite)
                     .SetCannotHaveKey()
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup3(27)
                     .AddExcludedRooms(dontUseFlyingSprites),
 
                 SpriteRequirement.New(SpriteConstants.BomberFlyingCreaturesFromDarkworld2Sprite)
                     .SetCannotHaveKey()
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup3(27)
                     .AddExcludedRooms(dontUseFlyingSprites),
 
@@ -1137,6 +1181,7 @@ namespace EnemizerLibrary
                     .SetDoNotRandomize(), // TODO: special?
 
                 SpriteRequirement.New(SpriteConstants.MimicSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup1(44),
 
                 SpriteRequirement.New(SpriteConstants.FeudingFriendsOnDeathMountainSprite)
@@ -1267,6 +1312,7 @@ namespace EnemizerLibrary
 
                 SpriteRequirement.New(SpriteConstants.ThiefSprite)
                     .SetCannotHaveKey()
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup0(14, 21),
 
                 // These are loaded into BG as objects
@@ -1319,9 +1365,11 @@ namespace EnemizerLibrary
                 SpriteRequirement.New(SpriteConstants.SwamolaSprite)
                     .SetWaterSprite()
                     .SetCannotHaveKey()
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup3(25),
 
                 SpriteRequirement.New(SpriteConstants.LynelSprite)
+                    .SetMinDifficulty(RandomizeEnemiesType.Normal)
                     .AddSubgroup3(20),
 
                 // TODO: add never use LW and DW

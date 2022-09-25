@@ -45,7 +45,9 @@ namespace EnemizerLibrary
 
     public class PatchObject
     {
+        [JsonProperty("address")]
         public int Address { get; set; }
+        [JsonProperty("patchData")]
         public List<byte> PatchData { get; set; } = new();
     }
 }
