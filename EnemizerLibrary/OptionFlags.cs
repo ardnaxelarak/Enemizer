@@ -7,6 +7,7 @@ namespace EnemizerLibrary
     public class OptionFlags
     {
         public bool RandomizeEnemies { get; set; } = true;
+        public bool MaintainUnkillableEnemies { get; set; } = false;
         public RandomizeEnemiesType RandomizeEnemiesType { get; set; } = RandomizeEnemiesType.Chaos; // default to Chaos
         public bool RandomizeBushEnemyChance { get; set; } = true;
 
@@ -83,10 +84,7 @@ namespace EnemizerLibrary
         public bool UseManualBosses { get; set; } = false; // used by randomizer web
         public ManualBosses ManualBosses { get; set; }
 
-        public OptionFlags()
-        {
-
-        }
+        public OptionFlags() { }
 
         public OptionFlags(byte[] optionBytes)
         {
@@ -215,6 +213,7 @@ namespace EnemizerLibrary
             this.IncreaseBrightness = Convert.ToBoolean(optionBytes[i++]);
             this.MuteMusicEnableMSU1 = Convert.ToBoolean(optionBytes[i++]);
             this.AgahnimBounceBalls = Convert.ToBoolean(optionBytes[i++]);
+            this.MaintainUnkillableEnemies = Convert.ToBoolean(optionBytes[i++]);
         }
 
         public byte[] ToByteArray()
@@ -325,6 +324,7 @@ namespace EnemizerLibrary
             ret[i++] = Convert.ToByte(this.IncreaseBrightness);
             ret[i++] = Convert.ToByte(this.MuteMusicEnableMSU1);
             ret[i++] = Convert.ToByte(this.AgahnimBounceBalls);
+            ret[i++] = Convert.ToByte(this.MaintainUnkillableEnemies);
             return ret;
         }
     }

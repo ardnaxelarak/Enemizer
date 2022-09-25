@@ -236,21 +236,29 @@ namespace EnemizerLibrary
 
     public class SpriteRequirementCollection
     {
+        private OptionFlags optionFlags;
+
         public List<SpriteRequirement> SpriteRequirements { get; set; }
 
         public IEnumerable<SpriteRequirement> RandomizableSprites
         {
-            get => SpriteRequirements.Where(x => !x.DoNotRandomize);
+            get => SpriteRequirements.Where(x => !x.DoNotRandomize && (x.Killable || !optionFlags.MaintainUnkillableEnemies));
         }
 
         public List<SpriteRequirement> DoNotRandomizeSprites
         {
-            get => SpriteRequirements.Where(x => x.DoNotRandomize).ToList();
+            get => SpriteRequirements.Where(x => x.DoNotRandomize || (!x.Killable && optionFlags.MaintainUnkillableEnemies)).ToList();
         }
 
         public IEnumerable<SpriteRequirement> UsableEnemySprites
         {
-            get => SpriteRequirements.Where(x => !x.NPC && x.IsEnemySprite && !x.Boss && !x.Overlord && !x.IsObject);
+            get => SpriteRequirements.Where(
+                x => !x.NPC
+                && x.IsEnemySprite
+                && !x.Boss
+                && !x.Overlord
+                && !x.IsObject
+                && (x.Killable || !optionFlags.MaintainUnkillableEnemies));
         }
 
         public IEnumerable<SpriteRequirement> GetUsableDungeonEnemySprites(bool allowAbsorbable = false)
@@ -274,8 +282,16 @@ namespace EnemizerLibrary
             get => SpriteRequirements.Where(x => x.IsWaterSprite);
         }
 
-        public SpriteRequirementCollection()
+        public SpriteRequirementCollection(OptionFlags optionFlags = null)
         {
+            if (optionFlags is null)
+            {
+                this.optionFlags = new();
+            }
+            else
+            {
+                this.optionFlags = optionFlags;
+            }
             SpriteRequirements = new List<SpriteRequirement>
             {
                 SpriteRequirement.New(SpriteConstants.RavenSprite)

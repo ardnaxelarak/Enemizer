@@ -17,7 +17,7 @@ namespace EnemizerLibrary
         public void SetDebugMode()
         {
             var rand = new Random();
-            var sr = new SpriteRequirementCollection();
+            var sr = new SpriteRequirementCollection(optionFlags);
             var sg = new SpriteGroupCollection(romData, rand, sr);
             sg.LoadSpriteGroups();
             var rc = new RoomCollection(romData, rand, sg, sr);

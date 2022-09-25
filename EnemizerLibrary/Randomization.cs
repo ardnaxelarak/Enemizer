@@ -83,7 +83,7 @@ namespace EnemizerLibrary
             }
 
             //create_subset_gfx();
-            var spriteRequirements = new SpriteRequirementCollection();
+            var spriteRequirements = new SpriteRequirementCollection(optionFlags);
 
             var spriteGroupCollection = new SpriteGroupCollection(this.ROM_DATA, rand, spriteRequirements);
             spriteGroupCollection.LoadSpriteGroups();
