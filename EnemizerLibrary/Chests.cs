@@ -2,12 +2,12 @@
 {
     public class Chest
     {
-
         public string name;
         public int region;
         public int image_id;
         public int address;
         public byte itemin;
+
         public Chest(string name, int image_id, int region, int address, byte itemin = 255)
         {
             this.name = name;
@@ -16,13 +16,8 @@
             this.address = address;
             this.itemin = itemin;
         }
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
+
+        public string Name { get => name; }
 
         //public static List<Chest> chest_list = new List<Chest>();
         /*public static void add_chests()
@@ -259,8 +254,6 @@
             chest_list.Add(new Chest("Old man [Mirror]", 0, 14, 0xF69FA, 55));
             chest_list.Add(new Chest("KEY ITEM IN HERA [Key]", 0, 14, 0x180162, 47));
             //chest_list.Add(new Chest("Fairy Sword Exchange [Butter Sword]", 0, 14, 0x180028,52)); //NEED IMAGE
-
-
         }//*/
     }
 }

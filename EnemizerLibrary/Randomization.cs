@@ -23,7 +23,7 @@ namespace EnemizerLibrary
             this.ROM_DATA = romData;
 
             // make sure we have a randomizer rom
-            if (this.ROM_DATA.IsRandomizerRom == false)
+            if (!this.ROM_DATA.IsRandomizerRom)
             {
                 throw new Exception("Enemizer only supports randomizer roms for input.");
             }
@@ -74,7 +74,6 @@ namespace EnemizerLibrary
             {
                 MakeRandomLinkSpritePalette();
             }
-
 
             if (optionFlags.GenerateSpoilers)
             {

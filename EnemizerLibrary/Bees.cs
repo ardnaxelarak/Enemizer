@@ -18,40 +18,30 @@ namespace EnemizerLibrary
 
         public void BeeMeUp()
         {
-            int levelRand = 4;
-
-            switch(optionFlags.BeesLevel)
+            int levelRand = optionFlags.BeesLevel switch
             {
-                case BeeLevel.Level1:
-                    levelRand = 4;
-                    break;
-                case BeeLevel.Level2:
-                    levelRand = 2;
-                    break;
-                case BeeLevel.Level3:
-                    levelRand = 3;
-                    break;
-                case BeeLevel.Level4:
-                    levelRand = 1;
-                    break;
-            }
+                BeeLevel.Level1 => 4,
+                BeeLevel.Level2 => 2,
+                BeeLevel.Level3 => 3,
+                _ => 1,
+            };
 
-            foreach(var a in ChestAddresses)
+            foreach (var a in ChestAddresses)
             {
-                if(UselessItems.Contains(romData[a]))
+                if (UselessItems.Contains(romData[a]))
                 {
                     var r = rand.Next(levelRand);
 
-                    if(r == 0)
+                    if (r == 0)
                     {
                         romData[a] = ItemConstants.Trap1;
                     }
-                    else if(optionFlags.BeesLevel == BeeLevel.Level3 && r == 1)
+                    else if (optionFlags.BeesLevel == BeeLevel.Level3 && r == 1)
                     {
                         romData[a] = ItemConstants.Bee_NoBottle;
                     }
                 }
-                else if ((optionFlags.BeesLevel == BeeLevel.Level3 || optionFlags.BeesLevel == BeeLevel.Level4) 
+                else if ((optionFlags.BeesLevel == BeeLevel.Level3 || optionFlags.BeesLevel == BeeLevel.Level4)
                     && UselessItemsHardMode.Contains(romData[a]))
                 {
                     var r = rand.Next(levelRand);
@@ -146,5 +136,4 @@ namespace EnemizerLibrary
             ItemConstants.ProgressiveArmor
         };
     }
-
 }

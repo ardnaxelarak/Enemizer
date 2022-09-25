@@ -208,7 +208,7 @@ namespace EnemizerLibrary
             ArrghusGraphics = 20,
             TrinexxGraphics = 23;
 
-        public static readonly byte[] BossGraphics = 
+        public static readonly byte[] BossGraphics =
         {
             KholdstareGraphics, MoldormGraphics, MothulaGraphics, VitreousGraphics,
             HelmasaurGraphics, ArmosGraphics, LanmolaGraphics, BlindGraphics, ArmosGraphics, TrinexxGraphics
@@ -247,7 +247,7 @@ namespace EnemizerLibrary
             GanonTower2BossDropItemAddress = 0x0,
             GanonTower3BossDropItemAddress = 0x0;
 
-        public static readonly int[] BossDropItemAddresses =  
+        public static readonly int[] BossDropItemAddresses =
         {
             TowerOfHeraBossDropItemAddress,
             EasternPalaceBossDropItemAddress,
@@ -264,7 +264,7 @@ namespace EnemizerLibrary
             GanonTower3BossDropItemAddress
         };
 
-        public static readonly byte[] 
+        public static readonly byte[]
             KholdstarePointer = { 0x01, 0xEA },
             MoldormPointer = { 0xC3, 0xD9 },
             MothulaPointer = { 0x31, 0xDC },
@@ -346,10 +346,8 @@ namespace EnemizerLibrary
             IcePalaceCrystalTypeAddress = CrystalTypeBaseAddress + IcePalaceOffset,
             TurtleRockCrystalTypeAddress = CrystalTypeBaseAddress + TurtleRockOffset;
 
-
-
         public static readonly int CrystalBaseAddress = 0x1209D;
-        public static readonly int[] CrystalAddresses = 
+        public static readonly int[] CrystalAddresses =
         {
             CrystalBaseAddress + TowerOfHeraOffset,
             CrystalBaseAddress + EasternPalaceOffset,
@@ -664,7 +662,6 @@ namespace EnemizerLibrary
             0x00, 0x1C,     0x22, 0x00,
             0xFF, 0xFF,
         };
-
     }
 
     public class AssemblyConstants

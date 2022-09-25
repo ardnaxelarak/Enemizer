@@ -11,10 +11,7 @@ namespace EnemizerLibrary
         public int GroupId { get; set; }
         public int DungeonGroupId
         {
-            get
-            {
-                return GroupId - 0x40;
-            }
+            get => GroupId - 0x40;
             set
             {
                 GroupId = value + 0x40;
@@ -31,9 +28,8 @@ namespace EnemizerLibrary
 
         public List<int> ForceRoomsToGroup { get; set; }
 
-
-        RomData romData;
-        SpriteRequirementCollection spriteRequirementsCollection;
+        readonly RomData romData;
+        readonly SpriteRequirementCollection spriteRequirementsCollection;
 
         public SpriteGroup(RomData romData, SpriteRequirementCollection spriteRequirementsCollection, int groupId)
         {
@@ -62,7 +58,7 @@ namespace EnemizerLibrary
         }
 
         public SpriteGroup(RomData romData, SpriteRequirementCollection spriteRequirementsCollection, int groupId, params int[] forcedRooms)
-            :this(romData, spriteRequirementsCollection, groupId)
+            : this(romData, spriteRequirementsCollection, groupId)
         {
             this.ForceRoomsToGroup.AddRange(forcedRooms);
         }
@@ -87,7 +83,7 @@ namespace EnemizerLibrary
         {
             // TODO: add more logic to this?
             // needs to check for two subgroups, etc.
-            
+
             return spriteRequirementsCollection.GetUsableOverworldEnemySprites().Where(x => x.SpriteInGroup(this));
         }
     }

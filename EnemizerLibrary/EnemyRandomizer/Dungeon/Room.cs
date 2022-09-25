@@ -7,14 +7,11 @@ namespace EnemizerLibrary
 {
     public class Room
     {
-
         public string RoomName
         {
-            get
-            {
-                return RoomIdConstants.GetRoomName(RoomId);
-            }
+            get => RoomIdConstants.GetRoomName(RoomId);
         }
+
         public int RoomId { get; set; }
         public int GraphicsBlockId { get; set; }
         public int Tag1 { get; set; }
@@ -22,21 +19,16 @@ namespace EnemizerLibrary
 
         public bool IsShutterRoom
         {
-            get
-            {
-                return RoomIdConstants.NeedKillable_doors.Contains(RoomId);
-            }
+            get => RoomIdConstants.NeedKillable_doors.Contains(RoomId);
         }
+
         public bool IsWaterRoom
         {
-            get
-            {
-                return RoomIdConstants.WaterRoom.Contains(RoomId);
-            }
+            get => RoomIdConstants.WaterRoom.Contains(RoomId);
         }
 
         public List<DungeonSprite> Sprites { get; set; } = new List<DungeonSprite>();
-        //public List<RoomRequirement> Requirements { get; set; }
+        // public List<RoomRequirement> Requirements { get; set; }
 
         internal int RoomHeaderBaseAddress
         {
@@ -117,41 +109,39 @@ namespace EnemizerLibrary
         public void LoadRoom()
         {
             LoadHeader();
-
             LoadSprites();
         }
 
         public void UpdateRom()
         {
             UpdateHeader();
-
             UpdateSprites();
         }
 
         private void UpdateSprites()
         {
-            foreach(var s in Sprites)
+            foreach (var s in Sprites)
             {
                 s.UpdateRom();
 
-                //if(s.SpriteId == 3 && s.IsOverlord == false)
-                //{
-                //    throw new Exception("SpriteID 3 will crash the game");
-                //}
+                // if (s.SpriteId == 3 && !s.IsOverlord)
+                // {
+                //     throw new Exception("SpriteID 3 will crash the game");
+                // }
 
-                //if (s.IsOverlord == false)
-                //{
-                //    romData[s.Address + 1] = (byte)(romData[s.Address + 1] & SpriteConstants.OverlordRemoveMask);
-                //}
-                //romData[s.Address + 2] = s.SpriteId;
+                // if (!s.IsOverlord)
+                // {
+                //     romData[s.Address + 1] = (byte)(romData[s.Address + 1] & SpriteConstants.OverlordRemoveMask);
+                // }
+                // romData[s.Address + 2] = s.SpriteId;
             }
         }
 
         private void UpdateHeader()
         {
-            romData[RoomHeaderBaseAddress + 3] = (byte)(this.GraphicsBlockId);
-            romData[RoomHeaderBaseAddress + 5] = (byte)(this.Tag1);
-            romData[RoomHeaderBaseAddress + 6] = (byte)(this.Tag2);
+            romData[RoomHeaderBaseAddress + 3] = (byte)this.GraphicsBlockId;
+            romData[RoomHeaderBaseAddress + 5] = (byte)this.Tag1;
+            romData[RoomHeaderBaseAddress + 6] = (byte)this.Tag2;
         }
 
         void LoadHeader()
@@ -225,7 +215,7 @@ namespace EnemizerLibrary
 
             int i = 1; // skip byte0
 
-            while(romData[roomSpriteBaseAddress + i] != 0xFF)
+            while (romData[roomSpriteBaseAddress + i] != 0xFF)
             {
                 Sprites.Add(new DungeonSprite(romData, roomSpriteBaseAddress + i));
                 i += 3; // sprites are 3 byte chunks
@@ -262,7 +252,7 @@ namespace EnemizerLibrary
                 {
                     throw new Exception("Shutter room without any killable enemies");
                 }
-                if(this.IsWaterRoom && waterSprites.Count == 0)
+                if (this.IsWaterRoom && waterSprites.Count == 0)
                 {
                     throw new Exception("Water room without any water sprites");
                 }
@@ -313,7 +303,7 @@ namespace EnemizerLibrary
 
                     s.SpriteId = spriteId;
 
-                    if(spriteId == SpriteConstants.StalSprite)
+                    if (spriteId == SpriteConstants.StalSprite)
                     {
                         stalCount++;
                         if (stalCount > 2)// && possibleSprites.Count() > 1) // max 2 in a room
@@ -344,7 +334,7 @@ namespace EnemizerLibrary
 
             var possibleSprites = spriteGroup.GetPossibleEnemySprites(this).Where(x => x.Overlord == false).Select(x => x.SpriteId).ToArray();
 
-            if(possibleSprites.Length > 0)
+            if (possibleSprites.Length > 0)
             {
                 romData[SpriteConstants.RandomizedPotEnemyTableBaseAddress + this.RoomId] = (byte)possibleSprites[rand.Next(possibleSprites.Length)];
             }

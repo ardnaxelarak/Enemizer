@@ -1,36 +1,33 @@
-﻿namespace EnemizerLibrary
+﻿using System.Runtime.CompilerServices;
+
+namespace EnemizerLibrary
 {
     public class RoomSpriteCollection
     {
         readonly int[][] room_sprites = new int[292][];
 
-        public int[][] RoomSprites
-        {
-            get
-            {
-                return room_sprites;
-            }
-        }
+        public int[][] RoomSprites { get => room_sprites; }
 
-        //All the room randomized // Might add all the rooms and remove the sprites in the unchanged rooms to randomize the palettes in every rooms
+        // All the room randomized
+        // Might add all the rooms and remove the sprites in the unchanged rooms to randomize the palettes in every rooms
         public int[] randomized_rooms =
         {
-            2,4,9,10,11,14,17,19,21,22,23,25,26,27,30,31,33,34,36,38,39,40,42,43,46,49,50,52,53,54,55,56,57,58,59,
-            60,61,62,63,64,65,66,67,68,69,70,73,74,75,76,78,80,81,82,83,84,85,86,87,88,89,91,92,93,94,95,96,97,98,99,
-            100,101,102,103,104,106,107,109,110,113,114,115,116,117,118,119,123,124,125,126,127,128,129,130,131,132,133,
-            135,139,140,141,142,145,146,147,149,151,152,153,155,156,157,158,159,160,161,165,166,167,168,169,170,171,174,
-            175,176,177,178,179,182,183,184,186,187,188,190,192,193,194,195,196,197,201,203,204,206,208,209,210,213,214,
-            216,217,218,219,220,223,224,228,232,238,239,240,249,251,235,254,263,264,268,269,291,267,185,286,181,150
+            2, 4, 9, 10, 11, 14, 17, 19, 21, 22, 23, 25, 26, 27, 30, 31, 33, 34, 36, 38, 39, 40, 42, 43, 46, 49, 50, 52, 53, 54, 55, 56, 57, 58, 59,
+            60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 73, 74, 75, 76, 78, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+            100, 101, 102, 103, 104, 106, 107, 109, 110, 113, 114, 115, 116, 117, 118, 119, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133,
+            135, 139, 140, 141, 142, 145, 146, 147, 149, 151, 152, 153, 155, 156, 157, 158, 159, 160, 161, 165, 166, 167, 168, 169, 170, 171, 174,
+            175, 176, 177, 178, 179, 182, 183, 184, 186, 187, 188, 190, 192, 193, 194, 195, 196, 197, 201, 203, 204, 206, 208, 209, 210, 213, 214,
+            216, 217, 218, 219, 220, 223, 224, 228, 232, 238, 239, 240, 249, 251, 235, 254, 263, 264, 268, 269, 291, 267, 185, 286, 181, 150
         }; //127 removed
 
         public RoomSpriteCollection() // Will require a double check
         {
-            for (int i = 0; i < 292; i++)
+            for (var i = 0; i < 292; i++)
             {
                 room_sprites[i] = null;
             }
 
-            //all sprites contained in rooms that will be randomized
+            // all sprites contained in rooms that will be randomized
 
             room_sprites[2] = new int[] { 0x04D936, 0x04D939, 0x04D93C, 0x04D93F, 0x04D942, 0x04D960, 0x04D963 };
 
@@ -154,9 +151,9 @@
 
             room_sprites[89] = new int[] { 0x04E026, 0x04E029, 0x04E032, 0x04E038, 0x04E03B, 0x04E03E, 0x04E041, 0x04E044, 0x04E047, 0x04E035 };
 
-            room_sprites[91] = new int[] { 0x04E057, 0x04E05A, 0x04E05D, 0x04E060 };//remove some sprite for lag//0x04E063,0x04E066,0x04E069};
+            room_sprites[91] = new int[] { 0x04E057, 0x04E05A, 0x04E05D, 0x04E060 }; // remove some sprites for lag -- 0x04E063, 0x04E066, 0x04E069
 
-            room_sprites[92] = new int[] { };//canon rooms gtower
+            room_sprites[92] = new int[] { }; // canon rooms gtower
 
             room_sprites[93] = new int[] { 0x04E07F, 0x04E082, 0x04E085, 0x04E088, 0x04E08B, 0x04E091, 0x04E094, 0x04E097, 0x04E0A3, 0x04E09A, 0x04E09D, 0x04E0A0, 0x04E08E };
 
@@ -292,7 +289,7 @@
 
             room_sprites[179] = new int[] { 0x04E6E1, 0x04E6E4, 0x04E6E7, 0x04E6EA, 0x04E6ED };
 
-            room_sprites[185] = new int[] { }; //firesnake gfx
+            room_sprites[185] = new int[] { }; // firesnake gfx
 
             room_sprites[182] = new int[] { 0x04E6FD, 0x04E700, 0x04E709, 0x04E70C, 0x04E715, 0x04E718 };
 

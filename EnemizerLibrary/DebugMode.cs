@@ -247,18 +247,16 @@ namespace EnemizerLibrary
 
         void SetEnemyDamageZero()
         {
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 this.romData[0x3742D + 0 + (i * 3)] = 0; // green mail
                 this.romData[0x3742D + 1 + (i * 3)] = 0; // blue mail
                 this.romData[0x3742D + 2 + (i * 3)] = 0; // red mail
             }
 
-            for (int j = 0; j < 0xF3; j++)
+            for (var j = 0; j < 0xF3; j++)
             {
-                if (j != 0x54 && j != 0x09 && j != 0x53 && j != 0x88 && j != 0x89 && j != 0x53 && j != 0x8C && j != 0x92
-                    && j != 0x70 && j != 0xBD && j != 0xBE && j != 0xBF && j != 0xCB && j != 0xCE && j != 0xA2 && j != 0xA3 && j != 0x8D
-                    && j != 0x7A && j != 0x7B && j != 0xCC && j != 0xCD && j != 0xA4 && j != 0xD6 && j != 0xD7)
+                if (!j.IsIn(0x54, 0x09, 0x53, 0x88, 0x89, 0x8C, 0x92, 0x70, 0xBD, 0xBE, 0xBF, 0xBF, 0xCB, 0xCE, 0xA2, 0xA3, 0x8D, 0x7A, 0x7B, 0xCC, 0xCD, 0xA4, 0xD6, 0xD7))
                 {
                     this.romData[0x6B266 + j] = 0;
                 }

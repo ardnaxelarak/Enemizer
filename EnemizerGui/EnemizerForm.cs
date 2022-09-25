@@ -157,7 +157,7 @@ namespace Enemizer
         void LoadDebugEnemyListBox()
         {
             debugForceEnemyComboBox.Items.Clear();
-            debugForceEnemyComboBox.DataSource = EnemizerLibrary.SpriteConstants.spriteNames
+            debugForceEnemyComboBox.DataSource = EnemizerLibrary.SpriteConstants.SpriteNames
                     .Where(x => EnemizerLibrary.SpriteConstants.DebugUsableSprites.Contains(x.Key))
                     .OrderBy(x => x.Value)
                     .ToList();

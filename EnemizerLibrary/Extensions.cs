@@ -4,6 +4,11 @@ using System.Reflection;
 
 namespace EnemizerLibrary
 {
+    public static class ContainsExtension
+    {
+        public static bool IsIn<T>(this T item, params T[] list) => Array.IndexOf(list, item) != -1;
+    }
+
     public static class EnumEx
     {
         public static T GetValueFromDescription<T>(string description)
@@ -29,8 +34,7 @@ namespace EnemizerLibrary
             // or return default(T);
         }
 
-        public static string GetDescription<T>(this T enumerationValue)
-            where T : struct
+        public static string GetDescription<T>(this T enumerationValue) where T : struct
         {
             Type type = enumerationValue.GetType();
             if (!type.IsEnum)

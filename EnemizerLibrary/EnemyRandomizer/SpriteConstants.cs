@@ -22,14 +22,15 @@ namespace EnemizerLibrary
 
         public static string GetSpriteName(int spriteId)
         {
-            if (spriteNames.TryGetValue(spriteId, out var spriteName))
+            if (SpriteNames.TryGetValue(spriteId, out var spriteName))
             {
                 return spriteName;
             }
 
             return null;
         }
-        public static readonly Dictionary<int, string> spriteNames = new Dictionary<int, string>()
+
+        public static readonly Dictionary<int, string> SpriteNames = new()
         {
             { 0x00, "Raven" },
             { 0x01, "Vulture" },
@@ -593,8 +594,8 @@ namespace EnemizerLibrary
             OL_SoldierAlerter_Blue = 0x141,
             OL_SoldierAlerter_Green = 0x142;
 
-        //all the absorbable sprites fairy, bombs, rupees, arrows, ect, that can be used in any rooms without any specific set selected
-        public static readonly byte[] absorbable_sprites =
+        // all the absorbable sprites fairy, bombs, rupees, arrows, ect, that can be used in any rooms without any specific set selected
+        public static readonly byte[] AbsorbableSprites =
         {
             SpriteConstants.HeartSprite,
             SpriteConstants.GreenRupeeSprite,
@@ -612,7 +613,7 @@ namespace EnemizerLibrary
         };
 
 
-        //For Keys
+        // For Keys
         public static readonly byte[] NonKillable =
         {
             SpriteConstants.ActivatoForThePonds_WhereYouThrowInItemsSprite,
@@ -733,7 +734,7 @@ namespace EnemizerLibrary
          * Example: Bubbles (aka Fire Faeries) are not considered alive for the purposes of puzzles, 
          * because it's not expected that you always have the resources to kill them. Thus, they always have this bit set.
          */
-        public static readonly byte[] statis_sprites =
+        public static readonly byte[] StatisSprites =
         {
             SpriteConstants.ChainChompSprite,
             SpriteConstants.DeadrockSprite,
@@ -746,7 +747,7 @@ namespace EnemizerLibrary
         };
 
         //Non Killable in shutter doors Rooms
-        public static readonly byte[] NonKillable_shutter =
+        public static readonly byte[] NonKillableShutter =
         {
             SpriteConstants.ActivatoForThePonds_WhereYouThrowInItemsSprite,
             SpriteConstants.AngryBrothersSprite,
@@ -822,17 +823,16 @@ namespace EnemizerLibrary
             SpriteConstants.YellowStalfosSprite
         };
 
+        public static readonly byte[] BowSprites = { SpriteConstants.GreenEyegoreSprite, SpriteConstants.RedEyegoreSprite };
+        public static readonly byte[] HammerSprites = { SpriteConstants.TerrorpinSprite };
 
-        public static readonly byte[] bowSprites = { SpriteConstants.GreenEyegoreSprite, SpriteConstants.RedEyegoreSprite };
-        public static readonly byte[] hammerSprites = { SpriteConstants.TerrorpinSprite };
-
-        public static readonly int[] key_sprite = { 0x04DA20, 0x04DA5C, 0x04DB7F, 0x04DD73, 0x04DDC3, 0x04DE07, 0x04E203, 0x04E20B, 0x04E326, 0x04E4F7, 0x04E70C, 0x04E7C8, 0x04E7FA, 0x04E200, 0x04E687, 0x04E991, 0x04E994, 0x04E997, 0x04E99A, 0x04E99D, 0x04E9A0, 0x04E9A3, 0x04E9A6, 0x04E9A9, 0x04E9AC, 0x04E9AF, 0x04E790, 0x04E78D, 0x04E78A };
+        public static readonly int[] KepSprites = { 0x04DA20, 0x04DA5C, 0x04DB7F, 0x04DD73, 0x04DDC3, 0x04DE07, 0x04E203, 0x04E20B, 0x04E326, 0x04E4F7, 0x04E70C, 0x04E7C8, 0x04E7FA, 0x04E200, 0x04E687, 0x04E991, 0x04E994, 0x04E997, 0x04E99A, 0x04E99D, 0x04E9A0, 0x04E9A3, 0x04E9A6, 0x04E9A9, 0x04E9AC, 0x04E9AF, 0x04E790, 0x04E78D, 0x04E78A };
 
         //all the sprites "gfx" sheet 
-        public static readonly byte[] sprite_subset_0 = { 22, 31, 47, 14 }; //70-72 part of guards we already have 4 guard set don't need more
-        public static readonly byte[] sprite_subset_1 = { 44, 30, 32 };//73-13
-        public static readonly byte[] sprite_subset_2 = { 12, 18, 23, 24, 28, 46, 34, 35, 39, 40, 38, 41, 36, 37, 42 };//19 trainee guard
-        public static readonly byte[] sprite_subset_3 = { 17, 16, 27, 20, 82, 83 };
+        public static readonly byte[] SpriteSubset0 = { 22, 31, 47, 14 }; // 70-72 part of guards we already have 4 guard set don't need more
+        public static readonly byte[] SpriteSubset1 = { 44, 30, 32 }; // 73-13
+        public static readonly byte[] SpriteSubset2 = { 12, 18, 23, 24, 28, 46, 34, 35, 39, 40, 38, 41, 36, 37, 42 }; // 19 trainee guard
+        public static readonly byte[] SpriteSubset3 = { 17, 16, 27, 20, 82, 83 };
 
         public static readonly byte[] NpcSprites =
         {

@@ -77,7 +77,7 @@ namespace EnemizerLibrary
                             {
                                 for (int j = 0; j < 4; j++)
                                 {
-                                    sprites.Add(SpriteConstants.absorbable_sprites[rand.Next(SpriteConstants.absorbable_sprites.Length)]); //add all the absorbable sprites
+                                    sprites.Add(SpriteConstants.AbsorbableSprites[rand.Next(SpriteConstants.AbsorbableSprites.Length)]); //add all the absorbable sprites
                                 }
                             }
 
